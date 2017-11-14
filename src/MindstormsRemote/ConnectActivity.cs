@@ -101,7 +101,16 @@ namespace MindstormsRemote
             var device = l.GetItemAtPosition(position) as BluetoothDevice;
             var nxt = new NxtBrick(device);
             nxt.Connect();
-            var d = nxt.BatteryLevel;
+            nxt.PlayTone(1000, 100);
+            nxt.MotorA = new NxtMotor();
+            nxt.MotorA.OnForward(40, 360, true);
+            //Thread.Sleep(2000);
+           // nxt.MotorA.Off();
+        }
+
+        private void MotorA_Polled(NxtDevice sender)
+        {
+            //throw new NotImplementedException();
         }
 
         protected override void OnDestroy()
