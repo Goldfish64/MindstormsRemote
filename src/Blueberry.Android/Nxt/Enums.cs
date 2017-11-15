@@ -353,17 +353,17 @@ namespace Blueberry.Nxt
         /// <summary>
         /// NXT color sensor in red projector mode.
         /// </summary>
-        ColorRed = 0x0D,
+        ColorRed = 0x0E,
 
         /// <summary>
         /// NXT color sensor in green projector mode.
         /// </summary>
-        ColorGreen = 0x0D,
+        ColorGreen = 0x0F,
 
         /// <summary>
         /// NXT color sensor in blue projector mode.
         /// </summary>
-        ColorBlue = 0x0D,
+        ColorBlue = 0x10,
 
         /// <summary>
         /// NXT color sensor in the off state.

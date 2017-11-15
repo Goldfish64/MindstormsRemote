@@ -91,7 +91,7 @@ namespace Blueberry.Nxt
         protected NxtGetInputValuesResponse? PollingData { get; set; }
 
         /// <summary>
-        /// Gets the raw sensor value. A null value indicates the sensor has not yet been polled.
+        /// Gets the raw sensor value from the last poll. A null value indicates the sensor has not yet been polled.
         /// </summary>
         public ushort? RawValue => PollingData?.RawValue;
 

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectActivity.cs" />
+    <Compile Include="ControllerActivity.cs" />
     <Compile Include="Framework\BluetoothDevicesAdapter.cs" />
     <Compile Include="Framework\EventReceiver.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -72,6 +73,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\TextViewItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ControllerPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Nxt\Enums.cs" />
     <Compile Include="Nxt\NxtBrick.cs" />
+    <Compile Include="Nxt\NxtColorSensor.cs" />
     <Compile Include="Nxt\NxtDevice.cs" />
     <Compile Include="Nxt\NxtLightSensor.cs" />
     <Compile Include="Nxt\NxtMotor.cs" />

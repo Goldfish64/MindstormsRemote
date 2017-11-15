@@ -41,7 +41,7 @@ namespace Blueberry.Nxt
     /// <summary>
     /// Represents an NXT brick.
     /// </summary>
-    public class NxtBrick
+    public class NxtBrick : IDisposable
     {
         #region Private variables
 
@@ -271,7 +271,8 @@ namespace Blueberry.Nxt
                 }
                 catch (IOException)
                 {
-                    throw;
+                    //throw;
+                    return null;
                 }
             }
         }
@@ -502,6 +503,19 @@ namespace Blueberry.Nxt
             // Send command to NXT.
             var response = SendPacket(new byte[] { (byte)CommandTypes.DirectCommand, (byte)RemoteCommands.LsGetStatus, (byte)port });
             return response[3];
+        }
+
+
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Disconnect();
+            bluetoothSocket.Dispose();
+            bluetoothDevice.Dispose();
         }
 
         #endregion

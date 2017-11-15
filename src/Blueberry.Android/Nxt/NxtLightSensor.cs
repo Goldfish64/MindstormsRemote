@@ -53,7 +53,7 @@ namespace Blueberry.Nxt
         }
 
         /// <summary>
-        /// Gets the scaled value from the sensor since the last poll.
+        /// Gets the scaled value from the last poll.
         /// A null value indicates the sensor hasn't been polled yet.
         /// </summary>
         public short? Intensity => PollingData?.ScaledValue;

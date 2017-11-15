@@ -42,6 +42,8 @@ namespace MindstormsRemote
     [Activity(Label = "ConnectActivity", MainLauncher = true)]
     public class ConnectActivity : ListActivity
     {
+        public const string BluetoothAddressExtra = "BluetoothAddress";
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             // Call base method.
@@ -83,10 +85,14 @@ namespace MindstormsRemote
             // Did we find a Bluetooth device?
             if (e.Intent.Action == BluetoothDevice.ActionFound)
             {
+                // We only want to add NXTs.
                 var device = e.Intent.GetParcelableExtra(BluetoothDevice.ExtraDevice) as BluetoothDevice;
-                var adapter = ListView.Adapter as BluetoothDevicesAdapter;
+                if (device.BluetoothClass.MajorDeviceClass == MajorDeviceClass.Toy && device.BluetoothClass.DeviceClass == DeviceClass.ToyRobot)
+                {
+                    var adapter = ListView.Adapter as BluetoothDevicesAdapter;
 
-                adapter.Add(device);
+                    adapter.Add(device);
+                }
             }
         }
 
@@ -99,18 +105,11 @@ namespace MindstormsRemote
 
             // Get device.
             var device = l.GetItemAtPosition(position) as BluetoothDevice;
-            var nxt = new NxtBrick(device);
-            nxt.Connect();
-            nxt.PlayTone(1000, 100);
-            nxt.MotorA = new NxtMotor();
-            nxt.MotorA.OnForward(40, 360, true);
-            //Thread.Sleep(2000);
-           // nxt.MotorA.Off();
-        }
 
-        private void MotorA_Polled(NxtDevice sender)
-        {
-            //throw new NotImplementedException();
+            // Change to controller activity and pass the MAC address of the chosen NXT to it.
+            var controllerActivity = new Intent(this, typeof(ControllerActivity));
+            controllerActivity.PutExtra(BluetoothAddressExtra, device.Address);
+            StartActivity(controllerActivity);
         }
 
         protected override void OnDestroy()

@@ -22,22 +22,10 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
 namespace Blueberry.Nxt
 {
     /// <summary>
-    /// Represents an NXT or RCX touch sensor.
+    /// Represents a touch sensor.
     /// </summary>
     public class NxtTouchSensor : NxtSensor
     {
@@ -66,15 +54,6 @@ namespace Blueberry.Nxt
                 else
                     return null;
             }
-        }
-
-        #endregion
-
-        #region Overriden methods
-
-        public override void Poll()
-        {
-            base.Poll();
         }
 
         #endregion

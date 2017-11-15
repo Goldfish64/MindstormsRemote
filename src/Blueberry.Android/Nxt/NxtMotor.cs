@@ -22,18 +22,6 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
 namespace Blueberry.Nxt
 {
     /// <summary>
@@ -118,7 +106,7 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnForward(byte powerLevel, uint tachoLimit = 0, bool brake = false)
         {
-            OnForward(powerLevel, NxtMotorRegulationModes.Idle, tachoLimit, brake);
+            OnForward(powerLevel, NxtMotorRegulationModes.MotorSpeed, tachoLimit, brake);
         }
 
         /// <summary>
@@ -130,6 +118,16 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnForward(byte powerLevel, NxtMotorRegulationModes regMode, uint tachoLimit = 0, bool brake = false)
         {
+            // If power is set to 0, just turn off the motor.
+            if (powerLevel == 0)
+            {
+                if (brake)
+                    Off();
+                else
+                    Coast();
+                return;
+            }
+
             // Correct power level.
             if (powerLevel > 100)
                 powerLevel = 100;
@@ -146,7 +144,7 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnBackward(byte powerLevel, uint tachoLimit = 0, bool brake = false)
         {
-            OnBackward(powerLevel, NxtMotorRegulationModes.Idle, tachoLimit, brake);
+            OnBackward(powerLevel, NxtMotorRegulationModes.MotorSpeed, tachoLimit, brake);
         }
 
         /// <summary>
@@ -158,6 +156,16 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnBackward(byte powerLevel, NxtMotorRegulationModes regMode, uint tachoLimit = 0, bool brake = false)
         {
+            // If power is set to 0, just turn off the motor.
+            if (powerLevel == 0)
+            {
+                if (brake)
+                    Off();
+                else
+                    Coast();
+                return;
+            }
+
             // Correct power level.
             if (powerLevel > 100)
                 powerLevel = 100;
