@@ -89,13 +89,13 @@ namespace Blueberry.Nxt
             base.Poll();
         }
 
-        private void RunMotor(sbyte powerLevel, NxtMotorRegulationModes regMode, uint tachoLimit, bool brake)
+        private void RunMotor(sbyte powerLevel, NxtMotorRegulationModes regMode, sbyte turnRatio, uint tachoLimit, bool brake)
         {
             // Start motor.
             if (brake)
-                brick.SetOutputState(port, powerLevel, NxtMotorModes.On | NxtMotorModes.Brake | NxtMotorModes.Regulated, regMode, 0, NxtMotorRunStates.Running, tachoLimit);
+                brick.SetOutputState(port, powerLevel, NxtMotorModes.On | NxtMotorModes.Brake | NxtMotorModes.Regulated, regMode, turnRatio, NxtMotorRunStates.Running, tachoLimit);
             else
-                brick.SetOutputState(port, powerLevel, NxtMotorModes.On | NxtMotorModes.Regulated, regMode, 0, NxtMotorRunStates.Running, tachoLimit);
+                brick.SetOutputState(port, powerLevel, NxtMotorModes.On | NxtMotorModes.Regulated, regMode, turnRatio, NxtMotorRunStates.Running, tachoLimit);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnForward(byte powerLevel, uint tachoLimit = 0, bool brake = false)
         {
-            OnForward(powerLevel, NxtMotorRegulationModes.MotorSpeed, tachoLimit, brake);
+            OnForward(powerLevel, NxtMotorRegulationModes.MotorSpeed, 0, tachoLimit, brake);
         }
 
         /// <summary>
@@ -114,9 +114,10 @@ namespace Blueberry.Nxt
         /// </summary>
         /// <param name="powerLevel">The power level to set the motor at. Valid range is 0 to 100.</param>
         /// <param name="regMode">The regulation mode to use.</param>
+        /// <param name="turnRatio">The percent amount to turn.</param>
         /// <param name="tachoLimit">The maximum number of degrees the motor should run forward.</param>
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
-        public void OnForward(byte powerLevel, NxtMotorRegulationModes regMode, uint tachoLimit = 0, bool brake = false)
+        public void OnForward(byte powerLevel, NxtMotorRegulationModes regMode, sbyte turnRatio = 0, uint tachoLimit = 0, bool brake = false)
         {
             // If power is set to 0, just turn off the motor.
             if (powerLevel == 0)
@@ -133,7 +134,7 @@ namespace Blueberry.Nxt
                 powerLevel = 100;
 
             // Start motor forwards.
-            RunMotor((sbyte)powerLevel, regMode, tachoLimit, brake);
+            RunMotor((sbyte)powerLevel, regMode, turnRatio, tachoLimit, brake);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace Blueberry.Nxt
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
         public void OnBackward(byte powerLevel, uint tachoLimit = 0, bool brake = false)
         {
-            OnBackward(powerLevel, NxtMotorRegulationModes.MotorSpeed, tachoLimit, brake);
+            OnBackward(powerLevel, NxtMotorRegulationModes.MotorSpeed, 0, tachoLimit, brake);
         }
 
         /// <summary>
@@ -152,9 +153,10 @@ namespace Blueberry.Nxt
         /// </summary>
         /// <param name="powerLevel">The power level to set the motor at. Valid range is 0 to 100.</param>
         /// <param name="regMode">The regulation mode to use.</param>
+        /// <param name="turnRatio">The percent amount to turn.</param>
         /// <param name="tachoLimit">The maximum number of degrees the motor should run backward.</param>
         /// <param name="brake">Specify true to brake the motor when the tacho limit is reached.</param>
-        public void OnBackward(byte powerLevel, NxtMotorRegulationModes regMode, uint tachoLimit = 0, bool brake = false)
+        public void OnBackward(byte powerLevel, NxtMotorRegulationModes regMode, sbyte turnRatio = 0, uint tachoLimit = 0, bool brake = false)
         {
             // If power is set to 0, just turn off the motor.
             if (powerLevel == 0)
@@ -171,7 +173,7 @@ namespace Blueberry.Nxt
                 powerLevel = 100;
 
             // Start motor backwards.
-            RunMotor((sbyte)-powerLevel, regMode, tachoLimit, brake);
+            RunMotor((sbyte)-powerLevel, regMode, turnRatio, tachoLimit, brake);
         }
 
         /// <summary>
