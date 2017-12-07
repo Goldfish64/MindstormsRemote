@@ -16,28 +16,28 @@
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:text="Port 1: Touch" />
+            android:id="@+id/TxtSensor1" />
         <TextView
             android:layout_height="36dp"
             android:layout_width="0dp"
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:text="test" />
+            android:id="@+id/TxtSensor2" />
         <TextView
             android:layout_height="36dp"
             android:layout_width="0dp"
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:text="test" />
+            android:id="@+id/TxtSensor3" />
         <TextView
             android:layout_height="36dp"
             android:layout_width="0dp"
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:text="test" />
+            android:id="@+id/TxtSensor4" />
     </GridLayout>
     <GridLayout
         android:layout_width="match_parent"

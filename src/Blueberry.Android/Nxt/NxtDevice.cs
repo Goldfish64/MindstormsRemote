@@ -22,6 +22,7 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+using System;
 using System.Threading;
 
 namespace Blueberry.Nxt
@@ -89,6 +90,16 @@ namespace Blueberry.Nxt
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the device's value as a string.
+        /// </summary>
+        public abstract string Value { get; }
+
+        /// <summary>
+        /// Gets the device's friendly name.
+        /// </summary>
+        public abstract string FriendlyName { get; }
 
         #endregion
 

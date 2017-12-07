@@ -80,7 +80,10 @@
     <Compile Include="ConnectActivity.cs" />
     <Compile Include="ControllerActivity.cs" />
     <Compile Include="Framework\BluetoothDevicesAdapter.cs" />
+    <Compile Include="Framework\Constants.cs" />
     <Compile Include="Framework\EventReceiver.cs" />
+    <Compile Include="Framework\Sensors.cs" />
+    <Compile Include="Framework\SensorsAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsActivity.cs" />

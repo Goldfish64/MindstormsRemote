@@ -23,16 +23,6 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace Blueberry.Nxt
 {
@@ -43,7 +33,6 @@ namespace Blueberry.Nxt
     {
         #region Protected variables
 
-        private NxtInputPorts port;
         private NxtSensorTypes type;
         private NxtSensorModes mode;
 
@@ -66,6 +55,14 @@ namespace Blueberry.Nxt
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the port.
+        /// </summary>
+        internal NxtInputPorts Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sensor type.
+        /// </summary>
         protected NxtSensorTypes Type
         {
             get { return type; }
@@ -73,10 +70,13 @@ namespace Blueberry.Nxt
             {
                 // Update sensor.
                 type = value;
-                brick.SetInputMode(port, type, mode);
+                brick?.SetInputMode(Port, type, mode);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the sensor mode.
+        /// </summary>
         protected NxtSensorModes Mode
         {
             get { return mode; }
@@ -84,16 +84,9 @@ namespace Blueberry.Nxt
             {
                 // Update sensor.
                 mode = value;
-                brick.SetInputMode(port, Type, mode);
+                brick?.SetInputMode(Port, Type, mode);
             }
         }
-
-        protected NxtGetInputValuesResponse? PollingData { get; set; }
-
-        /// <summary>
-        /// Gets the raw sensor value from the last poll. A null value indicates the sensor has not yet been polled.
-        /// </summary>
-        public ushort? RawValue => PollingData?.RawValue;
 
         #endregion
 
@@ -104,24 +97,24 @@ namespace Blueberry.Nxt
         /// </summary>
         /// <param name="brick">The <see cref="NxtBrick"/> to use.</param>
         /// <param name="port">The port the sensor is on.</param>
-        internal void Attach(NxtBrick brick, NxtInputPorts port)
+        internal virtual void Attach(NxtBrick brick, NxtInputPorts port)
         {
             // Save brick and port.
-            this.brick = brick;
-            this.port = port;
+            this.brick = brick ?? throw new ArgumentNullException(nameof(brick));
+            Port = port;
 
             // Update sensor.
             brick.SetInputMode(port, Type, mode);
         }
 
         /// <summary>
-        /// Polls the sensor.
+        /// Detaches the sensor.
         /// </summary>
-        public override void Poll()
+        internal virtual void Detach()
         {
-            // Get sensor information.
-            PollingData = brick.GetInputValues(port);
-            base.Poll();
+            PollingInterval = 0;
+            brick = null;
+            Port = 0;
         }
 
         #endregion

@@ -78,9 +78,9 @@ namespace MindstormsRemote.Framework
         {
             // Get item and view.
             var device = devices[position];
-            var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.TextViewItem, parent, false);
-            var text = view.FindViewById<TextView>(Resource.Id.textItem);
-            text.Text = device.Name;
+            var view = (convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.TextViewItem, parent, false)) as TextView;
+            //var text = view.FindViewById<TextView>(Resource.Id.textItem);
+            view.Text = device.Name;
 
             // Return the view.
             return view;

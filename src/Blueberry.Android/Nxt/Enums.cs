@@ -336,7 +336,7 @@ namespace Blueberry.Nxt
         LowSpeed = 0x0A,
 
         /// <summary>
-        /// NXT low speed active I2C sensor running.
+        /// NXT low speed active I2C sensor.
         /// </summary>
         LowSpeed9V = 0x0B,
 

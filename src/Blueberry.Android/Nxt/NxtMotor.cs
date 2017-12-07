@@ -63,6 +63,16 @@ namespace Blueberry.Nxt
             get { return pollingData?.RotationCount; }
         }
 
+        /// <summary>
+        /// Gets the motor's value as a string.
+        /// </summary>
+        public override string Value => "";
+
+        /// <summary>
+        /// Gets the motor's friendly name.
+        /// </summary>
+        public override string FriendlyName => "Motor";
+
         #endregion
 
         #region Methods

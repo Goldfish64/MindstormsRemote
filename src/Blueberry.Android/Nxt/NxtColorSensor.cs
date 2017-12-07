@@ -1,21 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* File: NxtColorSensor.cs
+* 
+* Copyright (c) 2016-2017 John Davis
+*
+* Permission is hereby granted, free of charge, to any person obtaining a
+* copy of this software and associated documentation files (the "Software"),
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
+* and/or sell copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+* IN THE SOFTWARE.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using System;
 
 namespace Blueberry.Nxt
 {
     /// <summary>
     /// Represents an NXT color sensor.
     /// </summary>
-    public class NxtColorSensor : NxtSensor
+    public class NxtColorSensor : NxtAnalogSensor
     {
         #region Private variables
 
@@ -94,6 +108,47 @@ namespace Blueberry.Nxt
             }
         }
 
+        /// <summary>
+        /// Gets the sensor's value as a string.
+        /// </summary>
+        public override string Value
+        {
+            get
+            {
+                if (detectionMode == NxtColorSensorModes.Color)
+                    return Enum.GetName(typeof(NxtColorSensorValues), Color);
+                else
+                    return Intensity != null ? (Intensity / 10).ToString() + "%" : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sensor's friendly name.
+        /// </summary>
+        public override string FriendlyName
+        {
+            get
+            {
+                switch (detectionMode)
+                {
+                    case NxtColorSensorModes.LightRed:
+                        return "Color (red light)";
+
+                    case NxtColorSensorModes.LightGreen:
+                        return "Color (green light)";
+
+                    case NxtColorSensorModes.LightBlue:
+                        return "Color (blue light)";
+
+                    case NxtColorSensorModes.LightPassive:
+                        return "Color (inactive light)";
+
+                    default:
+                        return "Color";
+                }
+            }
+        }
+
         #endregion
     }
 
@@ -128,7 +183,7 @@ namespace Blueberry.Nxt
         LightPassive
     }
 
-    public enum NxtColorSensorValues
+    public enum NxtColorSensorValues : short
     {
         Black = 1,
         Blue = 2,

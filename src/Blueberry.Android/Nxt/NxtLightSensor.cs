@@ -27,7 +27,7 @@ namespace Blueberry.Nxt
     /// <summary>
     /// Represents an NXT light sensor.
     /// </summary>
-    public class NxtLightSensor : NxtSensor
+    public class NxtLightSensor : NxtAnalogSensor
     {
         #region Constructor
 
@@ -57,6 +57,16 @@ namespace Blueberry.Nxt
         /// A null value indicates the sensor hasn't been polled yet.
         /// </summary>
         public short? Intensity => PollingData?.ScaledValue;
+
+        /// <summary>
+        /// Gets the sensor's value as a string.
+        /// </summary>
+        public override string Value => Intensity + "%";
+
+        /// <summary>
+        /// Gets the sensor's friendly name.
+        /// </summary>
+        public override string FriendlyName => GenerateLight ? "Light (active)" : "Light (inactive)";
 
         #endregion
     }

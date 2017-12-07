@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* File: NxtTouchSensor.cs
+* File: NxtAnalogSensor.cs
 * 
 * Copyright (c) 2016-2017 John Davis
 *
@@ -25,16 +25,18 @@
 namespace Blueberry.Nxt
 {
     /// <summary>
-    /// Represents a touch sensor.
+    /// Represents the base class for analog NXT sensors.
     /// </summary>
-    public class NxtTouchSensor : NxtAnalogSensor
+    public abstract class NxtAnalogSensor : NxtSensor
     {
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NxtTouchSensor"/> class.
+        /// Initializes a new instance of the <see cref="NxtAnalogSensor"/> class with the specified type and mode.
         /// </summary>
-        public NxtTouchSensor() : base(NxtSensorTypes.Switch, NxtSensorModes.Boolean)
+        /// <param name="type">The type of sensor.</param>
+        /// <param name="mode">The sensor mode.</param>
+        public NxtAnalogSensor(NxtSensorTypes type, NxtSensorModes mode) : base(type, mode)
         { }
 
         #endregion
@@ -42,29 +44,28 @@ namespace Blueberry.Nxt
         #region Properties
 
         /// <summary>
-        /// Gets whether or not the sensor was pressed during the last poll. A null value
-        /// indicates the sensor has not yet been polled.
+        /// Gets or sets the polling data.
         /// </summary>
-        public bool? IsPressed
+        protected NxtGetInputValuesResponse? PollingData { get; set; }
+
+        /// <summary>
+        /// Gets the raw sensor value from the last poll. A null value indicates the sensor has not yet been polled.
+        /// </summary>
+        public ushort? RawValue => PollingData?.RawValue;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Polls the sensor.
+        /// </summary>
+        public override void Poll()
         {
-            get
-            {
-                if (PollingData != null)
-                    return PollingData.Value.ScaledValue == 1;
-                else
-                    return null;
-            }
+            // Get sensor information.
+            PollingData = brick.GetInputValues(Port);
+            base.Poll();
         }
-
-        /// <summary>
-        /// Gets the sensor's value as a string.
-        /// </summary>
-        public override string Value => IsPressed == true ? "Pressed" : "Released";
-
-        /// <summary>
-        /// Gets the sensor's friendly name.
-        /// </summary>
-        public override string FriendlyName => "Touch";
 
         #endregion
     }

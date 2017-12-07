@@ -36,7 +36,7 @@ using Android.Widget;
 
 namespace Blueberry.Nxt
 {
-    public class NxtSoundSensor : NxtSensor
+    public class NxtSoundSensor : NxtAnalogSensor
     {
         #region Constructor
 
@@ -62,6 +62,16 @@ namespace Blueberry.Nxt
         }
 
         public short? SoundLevel => PollingData?.ScaledValue;
+
+        /// <summary>
+        /// Gets the sensor's value as a string.
+        /// </summary>
+        public override string Value => SoundLevel?.ToString();
+
+        /// <summary>
+        /// Gets the sensor's friendly name.
+        /// </summary>
+        public override string FriendlyName => dBA ? "Sound (dBA)" : "Sound (dB)";
 
         #endregion
     }

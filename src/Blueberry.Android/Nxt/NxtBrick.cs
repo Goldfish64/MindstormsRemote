@@ -130,6 +130,7 @@ namespace Blueberry.Nxt
             get { return sensor1; }
             set
             {
+                sensor1?.Detach();
                 sensor1 = value;
                 sensor1?.Attach(this, NxtInputPorts.Port1);
             }
@@ -143,6 +144,7 @@ namespace Blueberry.Nxt
             get { return sensor2; }
             set
             {
+                sensor2?.Detach();
                 sensor2 = value;
                 sensor2?.Attach(this, NxtInputPorts.Port2);
             }
@@ -156,6 +158,7 @@ namespace Blueberry.Nxt
             get { return sensor3; }
             set
             {
+                sensor3?.Detach();
                 sensor3 = value;
                 sensor3?.Attach(this, NxtInputPorts.Port3);
             }
@@ -169,6 +172,7 @@ namespace Blueberry.Nxt
             get { return sensor4; }
             set
             {
+                sensor4?.Detach();
                 sensor4 = value;
                 sensor4?.Attach(this, NxtInputPorts.Port4);
             }
@@ -196,15 +200,11 @@ namespace Blueberry.Nxt
             if (bluetoothSocket?.IsConnected == true)
                 return;
 
-            // Get UUIDs.
-            var uuids = bluetoothDevice.GetUuids();
-            if (uuids.Length < 1)
-                throw new InvalidOperationException("The Bluetooth device didn't return any UUIDs.");
-
             // Create and open socket.
             try
             {
-                bluetoothSocket = bluetoothDevice.CreateRfcommSocketToServiceRecord(uuids[0].Uuid);
+                // UUID is well-known for Serial Port Protocol (SPP) devices.
+                bluetoothSocket = bluetoothDevice.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
                 bluetoothSocket.Connect();
             }
             catch (IOException e)
@@ -498,14 +498,40 @@ namespace Blueberry.Nxt
                 return 0;
         }
 
-        internal byte LsGetStatus(NxtInputPorts port)
+        internal byte? LsGetStatus(NxtInputPorts port)
         {
             // Send command to NXT.
             var response = SendPacket(new byte[] { (byte)CommandTypes.DirectCommand, (byte)RemoteCommands.LsGetStatus, (byte)port });
-            return response[3];
+            return response?[3];
         }
 
+        internal void LsWrite(NxtInputPorts port, byte[] data, byte resultLength)
+        {
+            // Create byte array.
+            var bytes = new byte[data.Length + 5];
+            bytes[0] = (byte)CommandTypes.DirectCommandNoReply;
+            bytes[1] = (byte)RemoteCommands.LsWrite;
+            bytes[2] = (byte)port;
+            bytes[3] = (byte)(data.Length);
+            bytes[4] = resultLength;
 
+            // Copy data to array for sending.
+            data.CopyTo(bytes, 5);
+
+            // Send command to NXT.
+            SendPacket(bytes);
+        }
+
+        internal byte[] LsRead(NxtInputPorts port)
+        {
+            // Send command and get up to 16 bytes from specified sensor.
+            var result = SendPacket(new byte[] { (byte)CommandTypes.DirectCommand, (byte)RemoteCommands.LsRead, (byte)port });
+
+            // Return bytes.
+            var bytes = new byte[result[3]];
+            Array.Copy(result, 4, bytes, 0, bytes.Length);
+            return bytes;
+        }
 
         #endregion
 
