@@ -36,6 +36,7 @@ using System.Threading;
 using System.IO;
 using System;
 using Blueberry.Nxt;
+using Android.Support.V7.App;
 
 namespace MindstormsRemote
 {

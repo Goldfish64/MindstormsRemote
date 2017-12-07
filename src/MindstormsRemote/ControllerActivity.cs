@@ -54,6 +54,9 @@ namespace MindstormsRemote
             motorR = new NxtMotor();
             brick.MotorC = motorL;
             brick.MotorB = motorR;
+
+            //Prefer
+
             // nxt.MotorA.OnForward(40);
 
             // brick.Sensor1 = new NxtTouchSensor();
@@ -150,6 +153,17 @@ namespace MindstormsRemote
             }
         }
 
+        protected override void OnResume()
+        {
+            // Call base method.
+            base.OnResume();
+
+            // Get shared preferences.
+
+
+            // Update brick from preferences.
+        }
+
         public override void OnAttachedToWindow()
         {
             // Call base method.
@@ -181,6 +195,16 @@ namespace MindstormsRemote
             //change main_compat_menu
             MenuInflater.Inflate(Resource.Menu.ControllerMenu, menu);
             return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.action_settings)
+            {
+                StartActivity(new Intent(this, typeof(SettingsActivity)));
+                return true;
+            }
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

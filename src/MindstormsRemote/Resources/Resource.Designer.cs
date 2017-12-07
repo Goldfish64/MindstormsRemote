@@ -2428,10 +2428,13 @@ namespace MindstormsRemote
 			public const int select_dialog_singlechoice_material = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int support_simple_spinner_dropdown_item = 2130903090;
+			public const int SettingsPage = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int TextViewItem = 2130903091;
+			public const int support_simple_spinner_dropdown_item = 2130903091;
+			
+			// aapt resource value: 0x7f030034
+			public const int TextViewItem = 2130903092;
 			
 			static Layout()
 			{

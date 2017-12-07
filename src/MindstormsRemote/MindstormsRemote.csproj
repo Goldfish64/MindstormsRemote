@@ -83,6 +83,7 @@
     <Compile Include="Framework\EventReceiver.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MindstormsRemote.licenseheader" />
@@ -97,6 +98,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ControllerPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SettingsPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
