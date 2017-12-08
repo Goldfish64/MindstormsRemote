@@ -22,7 +22,6 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 using System.Threading;
 
 namespace Blueberry.Nxt

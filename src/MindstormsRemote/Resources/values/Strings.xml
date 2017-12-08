@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Mindstorms Remote</string>
+  <string name="connect">Connect</string>
   <string name="sensor1">Sensor 1:</string>
   <string name="sensor2">Sensor 2:</string>
   <string name="sensor3">Sensor 3:</string>

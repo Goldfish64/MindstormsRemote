@@ -14,6 +14,8 @@ namespace MindstormsRemote.Framework
 {
     public static class Constants
     {
+        public const string BluetoothAddressExtra = "BluetoothAddress";
+
         public const string PrefSensor1Type = "Sensor1Type";
         public const string PrefSensor2Type = "Sensor2Type";
         public const string PrefSensor3Type = "Sensor3Type";

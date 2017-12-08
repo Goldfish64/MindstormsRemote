@@ -40,7 +40,7 @@ using MindstormsRemote.Framework;
 
 namespace MindstormsRemote
 {
-    [Activity(Theme = "@style/Theme.AppCompat")]
+    [Activity()]
     public class SettingsActivity : AppCompatActivity
     {
         #region Private variables
@@ -56,6 +56,10 @@ namespace MindstormsRemote
 
             // Load the layout into view.
             SetContentView(Resource.Layout.SettingsPage);
+
+            // Add toolbar to view.
+            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.ToolbarSettings);
+            SetSupportActionBar(toolbar);
 
             // Load up prefernces.
             var preferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);

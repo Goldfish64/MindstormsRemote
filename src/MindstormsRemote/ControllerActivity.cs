@@ -42,7 +42,7 @@ using MindstormsRemote.Framework;
 
 namespace MindstormsRemote
 {
-    [Activity(Theme = "@style/Theme.AppCompat")]
+    [Activity()]
     public class ControllerActivity : AppCompatActivity
     {
         private BluetoothDevice device;
@@ -51,13 +51,17 @@ namespace MindstormsRemote
         private NxtMotor motorR;
         private byte powerLevel = 75;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             // Call base method.
             base.OnCreate(savedInstanceState);
 
             // Load the layout into view.
             SetContentView(Resource.Layout.ControllerPage);
+
+            // Add toolbar to view.
+            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.ToolbarController);
+            SetSupportActionBar(toolbar);
 
             // Wire up controller button events.
             FindViewById<Button>(Resource.Id.BtnDriveNW).Touch += OnControllerButtonTouch;
@@ -69,21 +73,78 @@ namespace MindstormsRemote
             FindViewById<Button>(Resource.Id.BtnDriveS).Touch += OnControllerButtonTouch;
             FindViewById<Button>(Resource.Id.BtnDriveSE).Touch += OnControllerButtonTouch;
 
-            // Get MAC address passed.
-            var address = Intent.GetStringExtra(ConnectActivity.BluetoothAddressExtra);
-            device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+            // Clear text fields.
+            FindViewById<TextView>(Resource.Id.TxtSensor1).Text = "Port 1: None";
+            FindViewById<TextView>(Resource.Id.TxtSensor2).Text = "Port 2: None";
+            FindViewById<TextView>(Resource.Id.TxtSensor3).Text = "Port 3: None";
+            FindViewById<TextView>(Resource.Id.TxtSensor4).Text = "Port 4: None";
 
-            brick = new NxtBrick(device);
-            brick.Connect();
-            brick.PlayTone(1000, 100);
-            motorL = new NxtMotor();
-            motorR = new NxtMotor();
-            brick.MotorC = motorL;
-            brick.MotorB = motorR;
+            await Task.Run(() =>
+            {
+                // Get MAC address passed.
+                var address = Intent.GetStringExtra(Constants.BluetoothAddressExtra);
+                device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
 
-           // var us = new NxtUltrasonicSensor();
-            //brick.Sensor4 = us;
-           // var s = us.ReadMeasurementUnits();
+                brick = new NxtBrick(device);
+                brick.Polled += Brick_Polled;
+
+                brick.Connect();
+                brick.PlayTone(1000, 100);
+                motorL = new NxtMotor();
+                motorR = new NxtMotor();
+                brick.MotorC = motorL;
+                brick.MotorB = motorR;
+                brick.PollingInterval = 1000;
+
+                // Load up prefernces.
+                var preferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
+
+                // Configure sensor on port 1.
+                var sensor1 = preferences.GetInt(Constants.PrefSensor1Type, (int)Sensors.None);
+                brick.Sensor1 = CreateSensor((Sensors)sensor1);
+                if (brick.Sensor1 != null)
+                {
+                    brick.Sensor1.Polled += OnSensor1Polled;
+                    brick.Sensor1.PollingInterval = 500;
+                }
+
+                // Configure sensor on port 2.
+                var sensor2 = preferences.GetInt(Constants.PrefSensor2Type, (int)Sensors.None);
+                brick.Sensor2 = CreateSensor((Sensors)sensor2);
+                if (brick.Sensor2 != null)
+                {
+                    brick.Sensor2.Polled += OnSensor2Polled;
+                    brick.Sensor2.PollingInterval = 500;
+                }
+
+                // Configure sensor on port 3.
+                var sensor3 = preferences.GetInt(Constants.PrefSensor3Type, (int)Sensors.None);
+                brick.Sensor3 = CreateSensor((Sensors)sensor3);
+                if (brick.Sensor3 != null)
+                {
+                    brick.Sensor3.Polled += OnSensor3Polled;
+                    brick.Sensor3.PollingInterval = 500;
+                }
+
+                // Configure sensor on port 4.
+                var sensor4 = preferences.GetInt(Constants.PrefSensor4Type, (int)Sensors.None);
+                brick.Sensor4 = CreateSensor((Sensors)sensor4);
+                if (brick.Sensor4 != null)
+                {
+                    brick.Sensor4.Polled += OnSensor4Polled;
+                    brick.Sensor4.PollingInterval = 500;
+                }
+            });
+        }
+
+        private void Brick_Polled(NxtDevice sender)
+        {
+            RunOnUiThread(() =>
+            {
+                // Update battery status.
+                var batteryStatus = FindViewById<TextView>(Resource.Id.TxtBattery);
+                batteryStatus.Text = $"Battery:\n{brick.BatteryLevel} mV";
+            });
         }
 
         /// <summary>
@@ -166,6 +227,10 @@ namespace MindstormsRemote
         {
             // Call base method.
             base.OnResume();
+
+            // If brick is null, return.
+            if (brick == null)
+                return;
 
             // Load up prefernces.
             var preferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);

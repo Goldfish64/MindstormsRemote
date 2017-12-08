@@ -22,36 +22,31 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.Bluetooth;
 using Java.IO;
+using System;
+using System.Text;
+using System.Threading;
 
 namespace Blueberry.Nxt
 {
     /// <summary>
     /// Represents an NXT brick.
     /// </summary>
-    public class NxtBrick : IDisposable
+    public class NxtBrick : NxtDevice, IDisposable
     {
         #region Private variables
 
+        // Bluetooth.
         private BluetoothDevice bluetoothDevice;
         private BluetoothSocket bluetoothSocket;
 
+        // Motors.
         private NxtMotor motorA;
         private NxtMotor motorB;
         private NxtMotor motorC;
 
+        // Sensors.
         private NxtSensor sensor1;
         private NxtSensor sensor2;
         private NxtSensor sensor3;
@@ -63,25 +58,33 @@ namespace Blueberry.Nxt
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NxtBrick"/> class.
+        /// </summary>
+        /// <param name="bluetoothDevice">The <see cref="BluetoothDevice"/> to connect with.</param>
         public NxtBrick(BluetoothDevice bluetoothDevice)
         {
             // Save Bluetooth device.
             this.bluetoothDevice = bluetoothDevice ?? throw new ArgumentNullException(nameof(bluetoothDevice), "The Bluetooth device can't be null.");
-
-            // Create motors.
-          //  MotorA = new NxtMotor(this, NxtOutputPorts.PortA);
-            //MotorB = new NxtMotor(this, NxtOutputPorts.PortB);
-           // MotorC = new NxtMotor(this, NxtOutputPorts.PortC);
+            brick = this;
         }
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Gets whether or not the brick is currently connected.
+        /// </summary>
         public bool IsConnected
         {
             get { return bluetoothSocket?.IsConnected == true; }
         }
+
+        /// <summary>
+        /// Gets the battery level in mV since the last poll.
+        /// </summary>
+        public ushort BatteryLevel { get; private set; }
 
         /// <summary>
         /// Gets or sets the motor on output port A.
@@ -91,6 +94,7 @@ namespace Blueberry.Nxt
             get { return motorA; }
             set
             {
+                motorA?.Detach();
                 motorA = value;
                 motorA?.Attach(this, NxtOutputPorts.PortA);
             }
@@ -104,6 +108,7 @@ namespace Blueberry.Nxt
             get { return motorB; }
             set
             {
+                motorB?.Detach();
                 motorB = value;
                 motorB?.Attach(this, NxtOutputPorts.PortB);
             }
@@ -117,6 +122,7 @@ namespace Blueberry.Nxt
             get { return motorC; }
             set
             {
+                motorC?.Detach();
                 motorC = value;
                 motorC?.Attach(this, NxtOutputPorts.PortC);
             }
@@ -178,14 +184,9 @@ namespace Blueberry.Nxt
             }
         }
 
-        public short BatteryLevel
-        {
-            get
-            {
-                var response = SendPacket(new byte[] { (byte)CommandTypes.DirectCommand, (byte)RemoteCommands.GetBatteryLevel });
-                return BitConverter.ToInt16(response, 3);
-            }
-        }
+        public override string FriendlyName => "NXT";
+
+        public override string Value => null;
 
         #endregion
 
@@ -277,13 +278,26 @@ namespace Blueberry.Nxt
             }
         }
 
+        /// <summary>
+        /// Polls the NXT.
+        /// </summary>
+        public override void Poll()
+        {
+            // Get battery level.
+            BatteryLevel = GetBatteryLevel();
 
-
+            // Call base method.
+            base.Poll();
+        }
 
         #endregion
 
         #region Direct command methods
 
+        /// <summary>
+        /// Starts the specified program.
+        /// </summary>
+        /// <param name="programName"></param>
         public void StartProgram(string programName)
         {
             // Create byte array.
@@ -466,8 +480,9 @@ namespace Blueberry.Nxt
         /// Gets the battery level.
         /// </summary>
         /// <returns></returns>
-        public ushort GetBatteryLevel()
+        internal ushort GetBatteryLevel()
         {
+            // Send command.
             var response = SendPacket(new byte[] { (byte)CommandTypes.DirectCommand, (byte)RemoteCommands.GetBatteryLevel });
             return BitConverter.ToUInt16(response, 3);
         }

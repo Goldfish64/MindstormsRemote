@@ -95,7 +95,7 @@ namespace Blueberry.Nxt
         internal byte[] SendBytes(byte[] data, byte resultLength)
         {
             // Send request to sensor.
-            brick.LsWrite(Port, data, resultLength);
+            brick?.LsWrite(Port, data, resultLength);
 
             // If result length is nothing, return null.
             if (resultLength == 0)
@@ -109,7 +109,7 @@ namespace Blueberry.Nxt
                 {
                     // Get how many bytes are ready.
                     Thread.Sleep(10);
-                    bytesReady = brick.LsGetStatus(Port);
+                    bytesReady = brick?.LsGetStatus(Port);
                 }
                 catch (Exception)
                 {
@@ -119,7 +119,7 @@ namespace Blueberry.Nxt
             }
             while (bytesReady < resultLength);
 
-            return brick.LsRead(Port);
+            return brick?.LsRead(Port);
         }
 
         /// <summary>

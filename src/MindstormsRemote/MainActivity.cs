@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* File: ConnectActivity.cs
+* File: MainActivity.cs
 * 
 * Copyright (c) 2016-2017 John Davis
 *
@@ -22,28 +22,32 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+
+using System;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
+using Android.Views;
 using Android.Widget;
 using MindstormsRemote.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using Android.Views;
-using Java.Util;
-using System.Threading;
-using System.IO;
-using System;
-using Blueberry.Nxt;
-using Android.Support.V7.App;
 
 namespace MindstormsRemote
 {
-    [Activity(Label = "ConnectActivity", MainLauncher = true)]
-    public class ConnectActivity : ListActivity
+    /// <summary>
+    /// Represents the main activity.
+    /// </summary>
+    [Activity(Label = "Mindstorms Remote", MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
     {
-        public const string BluetoothAddressExtra = "BluetoothAddress";
+        #region Private variables
+
+        private ListView listView;
+
+        #endregion
+
+        #region Methods
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -51,14 +55,16 @@ namespace MindstormsRemote
             base.OnCreate(savedInstanceState);
 
             // Load the layout into view.
-            SetContentView(Resource.Layout.ConnectPage);
+            SetContentView(Resource.Layout.MainPage);
 
-            //var listview = FindViewById<ListView>(Resource.Id.);
-            var adapter = new BluetoothDevicesAdapter(this);
-            //adapter.Add(device.Name);
-            ListView.Adapter = adapter;
+            // Add toolbar to view.
+            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.ToolbarMain);
+            SetSupportActionBar(toolbar);
 
-
+            // Get ListView.
+            listView = FindViewById<ListView>(Resource.Id.LstBluetoothDevices);
+            listView.Adapter = new BluetoothDevicesAdapter(this);
+            listView.ItemClick += OnItemClick;
 
             // Check if Bluetooth is supported
             if (BluetoothAdapter.DefaultAdapter != null)
@@ -72,16 +78,63 @@ namespace MindstormsRemote
 
                 // Register a receiver so we know when devices are found.
                 var btReceiver = new EventReceiver();
-                btReceiver.BroadcastReceived += BtReceiver_BroadcastReceived;
-
+                btReceiver.BroadcastReceived += OnBtBroadcastReceived;
                 RegisterReceiver(btReceiver, new IntentFilter(BluetoothDevice.ActionFound));
 
-                // Scan for NXT and EV3 bricks.
+                // Scan for NXT bricks.
                 BluetoothAdapter.DefaultAdapter.StartDiscovery();
             }
         }
 
-        private void BtReceiver_BroadcastReceived(object sender, BroadcastReceivedEventArgs e)
+        private void OnItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            // Stop discovery.
+            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+
+            // Get device.
+            var device = listView.GetItemAtPosition(e.Position) as BluetoothDevice;
+
+            // Change to controller activity and pass the MAC address of the chosen NXT to it.
+            var controllerActivity = new Intent(this, typeof(ControllerActivity));
+            controllerActivity.PutExtra(Constants.BluetoothAddressExtra, device.Address);
+            StartActivity(controllerActivity);
+        }
+
+        private void OnItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            //change main_compat_menu
+            MenuInflater.Inflate(Resource.Menu.ConnectMenu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.refresh)
+            {
+                // Stop discovery.
+                BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+
+                // Re-create list.
+                listView.Adapter = new BluetoothDevicesAdapter(this);
+
+                // Scan for NXT bricks.
+                BluetoothAdapter.DefaultAdapter.StartDiscovery();
+                return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
+        private void OnBtBroadcastReceived(object sender, BroadcastReceivedEventArgs e)
         {
             // Did we find a Bluetooth device?
             if (e.Intent.Action == BluetoothDevice.ActionFound)
@@ -90,32 +143,13 @@ namespace MindstormsRemote
                 var device = e.Intent.GetParcelableExtra(BluetoothDevice.ExtraDevice) as BluetoothDevice;
                 if (device.BluetoothClass.MajorDeviceClass == MajorDeviceClass.Toy && device.BluetoothClass.DeviceClass == DeviceClass.ToyRobot)
                 {
-                    var adapter = ListView.Adapter as BluetoothDevicesAdapter;
+                    var adapter = listView.Adapter as BluetoothDevicesAdapter;
 
                     adapter.Add(device);
                 }
             }
         }
 
-        protected override void OnListItemClick(ListView l, View v, int position, long id)
-        {
-            base.OnListItemClick(l, v, position, id);
-
-            // Stop discovery.
-            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
-
-            // Get device.
-            var device = l.GetItemAtPosition(position) as BluetoothDevice;
-
-            // Change to controller activity and pass the MAC address of the chosen NXT to it.
-            var controllerActivity = new Intent(this, typeof(ControllerActivity));
-            controllerActivity.PutExtra(BluetoothAddressExtra, device.Address);
-            StartActivity(controllerActivity);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-        }
+        #endregion
     }
 }

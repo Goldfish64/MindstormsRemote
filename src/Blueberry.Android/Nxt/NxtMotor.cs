@@ -90,6 +90,16 @@ namespace Blueberry.Nxt
         }
 
         /// <summary>
+        /// Detaches the motor.
+        /// </summary>
+        internal virtual void Detach()
+        {
+            PollingInterval = 0;
+            brick = null;
+            port = 0;
+        }
+
+        /// <summary>
         /// Polls the motor.
         /// </summary>
         public override void Poll()
