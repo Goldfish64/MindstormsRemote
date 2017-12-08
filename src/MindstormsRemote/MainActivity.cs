@@ -105,8 +105,25 @@ namespace MindstormsRemote
 
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            // Stop discovery.
+            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+
+            // Re-create list.
+            listView.Adapter = new BluetoothDevicesAdapter(this);
+
+            // Scan for NXT bricks.
+            BluetoothAdapter.DefaultAdapter.StartDiscovery();
+        }
+
         protected override void OnDestroy()
         {
+            // Stop discovery.
+            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+
             base.OnDestroy();
         }
 

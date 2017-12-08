@@ -317,8 +317,15 @@ namespace Blueberry.Nxt
         /// </summary>
         public override void Poll()
         {
-            // Get measurement from sensor.
-            PollingData = ReadMeasurementByte(0);
+            try
+            {
+                // Get measurement from sensor.
+                PollingData = ReadMeasurementByte(0);
+            }
+            catch (NxtCommunicationException)
+            {
+                PollingData = null;
+            }
 
             // Call base method.
             base.Poll();

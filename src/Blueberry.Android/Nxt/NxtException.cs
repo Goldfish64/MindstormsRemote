@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* File: NxtAnalogSensor.cs
+* File: NxtException.cs
 * 
 * Copyright (c) 2016-2017 John Davis
 *
@@ -22,58 +22,42 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+using System;
+
 namespace Blueberry.Nxt
 {
     /// <summary>
-    /// Represents the base class for analog NXT sensors.
+    /// The base class for library exceptions involving the NXT.
     /// </summary>
-    public abstract class NxtAnalogSensor : NxtSensor
+    public class NxtException : Exception
     {
-        #region Constructor
+        #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NxtAnalogSensor"/> class with the specified type and mode.
+        /// Initializes a new instance of the <see cref="NxtException"/> class.
         /// </summary>
-        /// <param name="type">The type of sensor.</param>
-        /// <param name="mode">The sensor mode.</param>
-        public NxtAnalogSensor(NxtSensorTypes type, NxtSensorModes mode) : base(type, mode)
+        public NxtException() : base()
         { }
 
-        #endregion
-
-        #region Properties
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NxtException"/> class with the specified error
+        /// message.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        public NxtException(string message) : base(message)
+        { }
 
         /// <summary>
-        /// Gets or sets the polling data.
+        /// Initializes a new instance of the <see cref="NxtException"/> class with the specified error
+        /// message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
-        protected NxtGetInputValuesResponse? PollingData { get; set; }
-
-        /// <summary>
-        /// Gets the raw sensor value from the last poll. A null value indicates the sensor has not yet been polled.
-        /// </summary>
-        public ushort? RawValue => PollingData?.RawValue;
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Polls the sensor.
-        /// </summary>
-        public override void Poll()
-        {
-            try
-            {
-                // Get sensor information.
-                PollingData = brick.GetInputValues(Port);
-            }
-            catch (NxtCommunicationException)
-            {
-                PollingData = null;
-            }
-
-            base.Poll();
-        }
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">
+        /// The exception that is the cause of the current exception, or a null
+        /// reference if no inner exception is specified.
+        /// </param>
+        public NxtException(string message, Exception innerException) : base(message, innerException)
+        { }
 
         #endregion
     }

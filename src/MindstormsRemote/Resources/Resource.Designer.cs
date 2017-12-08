@@ -1864,8 +1864,11 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070094
 			public const int SpinSensor4 = 2131165332;
 			
-			// aapt resource value: 0x7f070096
-			public const int Toolbar = 2131165334;
+			// aapt resource value: 0x7f070095
+			public const int SpinnerItemLayout = 2131165333;
+			
+			// aapt resource value: 0x7f070097
+			public const int Toolbar = 2131165335;
 			
 			// aapt resource value: 0x7f070069
 			public const int ToolbarController = 2131165289;
@@ -2131,8 +2134,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070054
 			public const int radio = 2131165268;
 			
-			// aapt resource value: 0x7f070097
-			public const int refresh = 2131165335;
+			// aapt resource value: 0x7f070098
+			public const int refresh = 2131165336;
 			
 			// aapt resource value: 0x7f070030
 			public const int right = 2131165232;
@@ -2188,8 +2191,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070068
 			public const int select_dialog_listview = 2131165288;
 			
-			// aapt resource value: 0x7f070098
-			public const int settings = 2131165336;
+			// aapt resource value: 0x7f070099
+			public const int settings = 2131165337;
 			
 			// aapt resource value: 0x7f070053
 			public const int shortcut = 2131165267;
@@ -2245,8 +2248,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07008b
 			public const int text2 = 2131165323;
 			
-			// aapt resource value: 0x7f070095
-			public const int textItem = 2131165333;
+			// aapt resource value: 0x7f070096
+			public const int textItem = 2131165334;
 			
 			// aapt resource value: 0x7f07004d
 			public const int textSpacerNoButtons = 2131165261;
@@ -2485,13 +2488,16 @@ namespace MindstormsRemote
 			public const int SettingsPage = 2130968626;
 			
 			// aapt resource value: 0x7f040033
-			public const int support_simple_spinner_dropdown_item = 2130968627;
+			public const int SpinnerItemLayout = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int TextViewItem = 2130968628;
+			public const int support_simple_spinner_dropdown_item = 2130968628;
 			
 			// aapt resource value: 0x7f040035
-			public const int Toolbar = 2130968629;
+			public const int TextViewItem = 2130968629;
+			
+			// aapt resource value: 0x7f040036
+			public const int Toolbar = 2130968630;
 			
 			static Layout()
 			{

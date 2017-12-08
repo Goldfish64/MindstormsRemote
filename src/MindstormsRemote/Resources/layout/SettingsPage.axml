@@ -2,45 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <include
-    android:id="@+id/ToolbarSettings"
-    layout="@layout/Toolbar" />
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-              android:layout_below="@id/ToolbarSettings">
-    <TextView
-        android:text="@string/sensor1"
+    <include
+        android:id="@+id/ToolbarSettings"
+        layout="@layout/Toolbar" />
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SpinSensor1" />
-    <TextView
-        android:text="@string/sensor2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SpinSensor2" />
-    <TextView
-        android:text="@string/sensor3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SpinSensor3" />
-    <TextView
-        android:text="@string/sensor4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SpinSensor4" />
-  </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/ToolbarSettings">
+        <TextView
+            android:text="@string/sensor1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SpinSensor1"
+            android:spinnerMode="dialog" />
+        <TextView
+            android:text="@string/sensor2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SpinSensor2" />
+        <TextView
+            android:text="@string/sensor3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SpinSensor3" />
+        <TextView
+            android:text="@string/sensor4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SpinSensor4" />
+    </LinearLayout>
 </RelativeLayout>

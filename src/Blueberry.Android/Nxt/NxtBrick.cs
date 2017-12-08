@@ -78,13 +78,23 @@ namespace Blueberry.Nxt
         /// </summary>
         public bool IsConnected
         {
-            get { return bluetoothSocket?.IsConnected == true; }
+            get
+            {
+                try
+                {
+                    return bluetoothSocket?.IsConnected == true;
+                }
+                catch (ObjectDisposedException)
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>
         /// Gets the battery level in mV since the last poll.
         /// </summary>
-        public ushort BatteryLevel { get; private set; }
+        public ushort? BatteryLevel { get; private set; }
 
         /// <summary>
         /// Gets or sets the motor on output port A.
@@ -270,10 +280,10 @@ namespace Blueberry.Nxt
                         return null;
                     }
                 }
-                catch (IOException)
+                catch (IOException e)
                 {
-                    //throw;
-                    return null;
+                    Disconnected?.Invoke(this, EventArgs.Empty);
+                    throw new NxtCommunicationException("There was an error communicating with the NXT brick.", e);
                 }
             }
         }
@@ -283,8 +293,15 @@ namespace Blueberry.Nxt
         /// </summary>
         public override void Poll()
         {
-            // Get battery level.
-            BatteryLevel = GetBatteryLevel();
+            try
+            {
+                // Get battery level.
+                BatteryLevel = GetBatteryLevel();
+            }
+            catch (NxtCommunicationException)
+            {
+                BatteryLevel = null;
+            }
 
             // Call base method.
             base.Poll();
@@ -547,6 +564,33 @@ namespace Blueberry.Nxt
             Array.Copy(result, 4, bytes, 0, bytes.Length);
             return bytes;
         }
+
+        #endregion
+
+        #region System commend methods
+
+        /// <summary>
+        /// Stops any current running program.
+        /// </summary>
+        public Version GetFirmwareVersion()
+        {
+            // Send command to NXT.
+            var response = SendPacket(new byte[] { (byte)CommandTypes.SystemCommand, (byte)SystemCommands.GetFirmwareVersion });
+
+            // TODO: Check status.
+
+            // Return firmware version.
+            return new Version(response[5], response[6]);
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler Disconnected;
 
         #endregion
 

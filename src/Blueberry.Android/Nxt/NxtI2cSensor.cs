@@ -111,10 +111,9 @@ namespace Blueberry.Nxt
                     Thread.Sleep(10);
                     bytesReady = brick?.LsGetStatus(Port);
                 }
-                catch (Exception)
+                catch (NxtException)
                 {
-
-                    throw;
+                    return null;
                 }
             }
             while (bytesReady < resultLength);

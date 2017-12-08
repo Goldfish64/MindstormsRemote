@@ -32,6 +32,7 @@ using Android.Views;
 using Android.Widget;
 using Blueberry.Nxt;
 using MindstormsRemote.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace MindstormsRemote
@@ -95,6 +96,7 @@ namespace MindstormsRemote
                 // Initialize NXT brick.
                 brick = new NxtBrick(device);
                 brick.Polled += OnBrickPolled;
+                brick.Disconnected += OnBrickDisconnected;
 
                 brick.Connect();
                 brick.PlayTone(1000, 100);
@@ -353,7 +355,22 @@ namespace MindstormsRemote
             {
                 // Update battery status.
                 var batteryStatus = FindViewById<TextView>(Resource.Id.TxtBattery);
-                batteryStatus.Text = $"Battery:\n{brick.BatteryLevel} mV";
+                batteryStatus.Text = string.Format("Battery:\n{0:F}%", (brick.BatteryLevel / (double)9000) * 100);
+            });
+        }
+
+        /// <summary>
+        /// Handles the Disconnected event of the NxtBrick.
+        /// </summary>
+        private void OnBrickDisconnected(object sender, EventArgs e)
+        {
+            RunOnUiThread(() =>
+            {
+                // Brick disconnected, show error and navigate back.
+                var toast = Toast.MakeText(Application.Context, "Connection to NXT lost.", ToastLength.Short);
+                toast.Show();
+
+                Finish();
             });
         }
 

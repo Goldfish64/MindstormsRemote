@@ -46,7 +46,9 @@
     <Compile Include="Nxt\NxtAnalogSensor.cs" />
     <Compile Include="Nxt\NxtBrick.cs" />
     <Compile Include="Nxt\NxtColorSensor.cs" />
+    <Compile Include="Nxt\NxtCommunicationException.cs" />
     <Compile Include="Nxt\NxtDevice.cs" />
+    <Compile Include="Nxt\NxtException.cs" />
     <Compile Include="Nxt\NxtI2cSensor.cs" />
     <Compile Include="Nxt\NxtLightSensor.cs" />
     <Compile Include="Nxt\NxtMotor.cs" />
