@@ -91,9 +91,7 @@
   <ItemGroup>
     <None Include="MindstormsRemote.licenseheader" />
     <None Include="packages.config" />
-    <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\MainPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -113,9 +111,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Widgets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Blueberry.Android\Blueberry.Android.csproj">
       <Project>{204335f5-4a02-495c-95c0-7113140608d2}</Project>
