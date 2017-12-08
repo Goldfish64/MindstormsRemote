@@ -22,25 +22,20 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.App;
 using Android.Preferences;
-using Blueberry.Nxt;
+using Android.Support.V7.App;
+using Android.Widget;
 using MindstormsRemote.Framework;
 
 namespace MindstormsRemote
 {
-    [Activity()]
+    /// <summary>
+    /// Represents the settings activity.
+    /// </summary>
+    [Activity(Label = "Settings")]
     public class SettingsActivity : AppCompatActivity
     {
         #region Private variables
@@ -48,6 +43,8 @@ namespace MindstormsRemote
         private ISharedPreferencesEditor prefEditor;
 
         #endregion
+
+        #region Methods
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -101,5 +98,7 @@ namespace MindstormsRemote
                 prefEditor.Commit();
             }
         }
+
+        #endregion
     }
 }

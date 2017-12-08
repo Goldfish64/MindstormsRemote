@@ -1804,7 +1804,13 @@ namespace MindstormsRemote
 			public const int ic_rescan = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int notification_template_icon_bg = 2130837581;
+			public const int ic_setting = 2130837581;
+			
+			// aapt resource value: 0x7f02004e
+			public const int ic_settings = 2130837582;
+			
+			// aapt resource value: 0x7f02004f
+			public const int notification_template_icon_bg = 2130837583;
 			
 			static Drawable()
 			{

@@ -22,34 +22,37 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
+using Android.Bluetooth;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
+using Android.Preferences;
+using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Android.Bluetooth;
 using Blueberry.Nxt;
-using System.Threading.Tasks;
-using Android.Support.V7.App;
-using Android.Preferences;
 using MindstormsRemote.Framework;
+using System.Threading.Tasks;
 
 namespace MindstormsRemote
 {
-    [Activity()]
+    /// <summary>
+    /// Represents the controller activity.
+    /// </summary>
+    [Activity]
     public class ControllerActivity : AppCompatActivity
     {
+        #region Private variables
+
         private BluetoothDevice device;
         private NxtBrick brick;
         private NxtMotor motorL;
         private NxtMotor motorR;
         private byte powerLevel = 75;
+
+        #endregion
+
+        #region Methods
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -61,6 +64,7 @@ namespace MindstormsRemote
 
             // Add toolbar to view.
             var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.ToolbarController);
+            toolbar.Title = ""; // https://stackoverflow.com/a/35430590.
             SetSupportActionBar(toolbar);
 
             // Wire up controller button events.
@@ -85,8 +89,12 @@ namespace MindstormsRemote
                 var address = Intent.GetStringExtra(Constants.BluetoothAddressExtra);
                 device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
 
+                // Change title to device name.
+                toolbar.Title = device.Name;
+
+                // Initialize NXT brick.
                 brick = new NxtBrick(device);
-                brick.Polled += Brick_Polled;
+                brick.Polled += OnBrickPolled;
 
                 brick.Connect();
                 brick.PlayTone(1000, 100);
@@ -137,14 +145,127 @@ namespace MindstormsRemote
             });
         }
 
-        private void Brick_Polled(NxtDevice sender)
+        /// <summary>
+        /// Called after Android.App.Activity.OnRestoreInstanceState(Android.OS.Bundle),
+        /// Android.App.Activity.OnRestart, or Android.App.Activity.OnPause, for your activity
+        /// to start interacting with the user.
+        /// </summary>
+        protected override void OnResume()
         {
-            RunOnUiThread(() =>
+            // Call base method.
+            base.OnResume();
+
+            // If brick is null, return.
+            if (brick == null)
+                return;
+
+            // Load up prefernces.
+            var preferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
+
+            // Configure sensor on port 1.
+            var sensor1 = preferences.GetInt(Constants.PrefSensor1Type, (int)Sensors.None);
+            brick.Sensor1 = CreateSensor((Sensors)sensor1);
+            if (brick.Sensor1 != null)
             {
-                // Update battery status.
-                var batteryStatus = FindViewById<TextView>(Resource.Id.TxtBattery);
-                batteryStatus.Text = $"Battery:\n{brick.BatteryLevel} mV";
-            });
+                brick.Sensor1.Polled += OnSensor1Polled;
+                brick.Sensor1.PollingInterval = 500;
+            }
+
+            // Configure sensor on port 2.
+            var sensor2 = preferences.GetInt(Constants.PrefSensor2Type, (int)Sensors.None);
+            brick.Sensor2 = CreateSensor((Sensors)sensor2);
+            if (brick.Sensor2 != null)
+            {
+                brick.Sensor2.Polled += OnSensor2Polled;
+                brick.Sensor2.PollingInterval = 500;
+            }
+
+            // Configure sensor on port 3.
+            var sensor3 = preferences.GetInt(Constants.PrefSensor3Type, (int)Sensors.None);
+            brick.Sensor3 = CreateSensor((Sensors)sensor3);
+            if (brick.Sensor3 != null)
+            {
+                brick.Sensor3.Polled += OnSensor3Polled;
+                brick.Sensor3.PollingInterval = 500;
+            }
+
+            // Configure sensor on port 4.
+            var sensor4 = preferences.GetInt(Constants.PrefSensor4Type, (int)Sensors.None);
+            brick.Sensor4 = CreateSensor((Sensors)sensor4);
+            if (brick.Sensor4 != null)
+            {
+                brick.Sensor4.Polled += OnSensor4Polled;
+                brick.Sensor4.PollingInterval = 500;
+            }
+
+            // Clear text fields.
+            if (brick.Sensor1 == null)
+                FindViewById<TextView>(Resource.Id.TxtSensor1).Text = "Port 1: None";
+            if (brick.Sensor2 == null)
+                FindViewById<TextView>(Resource.Id.TxtSensor2).Text = "Port 2: None";
+            if (brick.Sensor3 == null)
+                FindViewById<TextView>(Resource.Id.TxtSensor3).Text = "Port 3: None";
+            if (brick.Sensor4 == null)
+                FindViewById<TextView>(Resource.Id.TxtSensor4).Text = "Port 4: None";
+        }
+
+        /// <summary>
+        /// Creates an <see cref="NxtSensor"/> object.
+        /// </summary>
+        /// <param name="sensor"></param>
+        private NxtSensor CreateSensor(Sensors sensor)
+        {
+            switch (sensor)
+            {
+                case Sensors.Touch:
+                    return new NxtTouchSensor();
+
+                case Sensors.ColorFull:
+                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.Color };
+
+                case Sensors.ColorRed:
+                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightRed };
+
+                case Sensors.ColorGreen:
+                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightGreen };
+
+                case Sensors.ColorBlue:
+                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightBlue };
+
+                case Sensors.ColorInactive:
+                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightPassive };
+
+                case Sensors.Ultrasonic:
+                    return new NxtUltrasonicSensor();
+
+                default:
+                    return null;
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            brick.Dispose();
+
+            // Call base method.
+            base.OnDestroy();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            //change main_compat_menu
+            MenuInflater.Inflate(Resource.Menu.ControllerMenu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.settings)
+            {
+                StartActivity(new Intent(this, typeof(SettingsActivity)));
+                return true;
+            }
+            return base.OnOptionsItemSelected(item);
         }
 
         /// <summary>
@@ -223,65 +344,22 @@ namespace MindstormsRemote
             }
         }
 
-        protected override void OnResume()
+        /// <summary>
+        /// Handles the Polled event of the NxtBrick.
+        /// </summary>
+        private void OnBrickPolled(NxtDevice sender)
         {
-            // Call base method.
-            base.OnResume();
-
-            // If brick is null, return.
-            if (brick == null)
-                return;
-
-            // Load up prefernces.
-            var preferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
-
-            // Configure sensor on port 1.
-            var sensor1 = preferences.GetInt(Constants.PrefSensor1Type, (int)Sensors.None);
-            brick.Sensor1 = CreateSensor((Sensors)sensor1);
-            if (brick.Sensor1 != null)
+            RunOnUiThread(() =>
             {
-                brick.Sensor1.Polled += OnSensor1Polled;
-                brick.Sensor1.PollingInterval = 500;
-            }
-
-            // Configure sensor on port 2.
-            var sensor2 = preferences.GetInt(Constants.PrefSensor2Type, (int)Sensors.None);
-            brick.Sensor2 = CreateSensor((Sensors)sensor2);
-            if (brick.Sensor2 != null)
-            {
-                brick.Sensor2.Polled += OnSensor2Polled;
-                brick.Sensor2.PollingInterval = 500;
-            }
-
-            // Configure sensor on port 3.
-            var sensor3 = preferences.GetInt(Constants.PrefSensor3Type, (int)Sensors.None);
-            brick.Sensor3 = CreateSensor((Sensors)sensor3);
-            if (brick.Sensor3 != null)
-            {
-                brick.Sensor3.Polled += OnSensor3Polled;
-                brick.Sensor3.PollingInterval = 500;
-            }
-
-            // Configure sensor on port 4.
-            var sensor4 = preferences.GetInt(Constants.PrefSensor4Type, (int)Sensors.None);
-            brick.Sensor4 = CreateSensor((Sensors)sensor4);
-            if (brick.Sensor4 != null)
-            {
-                brick.Sensor4.Polled += OnSensor4Polled;
-                brick.Sensor4.PollingInterval = 500;
-            }
-
-            // Clear text fields.
-            if (brick.Sensor1 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor1).Text = "Port 1: None";
-            if (brick.Sensor2 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor2).Text = "Port 2: None";
-            if (brick.Sensor3 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor3).Text = "Port 3: None";
-            if (brick.Sensor4 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor4).Text = "Port 4: None";
+                // Update battery status.
+                var batteryStatus = FindViewById<TextView>(Resource.Id.TxtBattery);
+                batteryStatus.Text = $"Battery:\n{brick.BatteryLevel} mV";
+            });
         }
 
+        /// <summary>
+        /// Handles the Polled event of the sensor on port 1.
+        /// </summary>
         private void OnSensor1Polled(NxtDevice sender)
         {
             RunOnUiThread(() =>
@@ -291,6 +369,9 @@ namespace MindstormsRemote
             });
         }
 
+        /// <summary>
+        /// Handles the Polled event of the sensor on port 2.
+        /// </summary>
         private void OnSensor2Polled(NxtDevice sender)
         {
             RunOnUiThread(() =>
@@ -300,6 +381,9 @@ namespace MindstormsRemote
             });
         }
 
+        /// <summary>
+        /// Handles the Polled event of the sensor on port 3.
+        /// </summary>
         private void OnSensor3Polled(NxtDevice sender)
         {
             RunOnUiThread(() =>
@@ -309,6 +393,9 @@ namespace MindstormsRemote
             });
         }
 
+        /// <summary>
+        /// Handles the Polled event of the sensor on port 4.
+        /// </summary>
         private void OnSensor4Polled(NxtDevice sender)
         {
             RunOnUiThread(() =>
@@ -318,68 +405,6 @@ namespace MindstormsRemote
             });
         }
 
-        private NxtSensor CreateSensor(Sensors sensor)
-        {
-            switch (sensor)
-            {
-                case Sensors.Touch:
-                    return new NxtTouchSensor();
-
-                case Sensors.ColorFull:
-                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.Color };
-
-                case Sensors.ColorRed:
-                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightRed };
-
-                case Sensors.ColorGreen:
-                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightGreen };
-
-                case Sensors.ColorBlue:
-                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightBlue };
-
-                case Sensors.ColorInactive:
-                    return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.LightPassive };
-
-                case Sensors.Ultrasonic:
-                    return new NxtUltrasonicSensor();
-
-                default:
-                    return null;
-            }
-        }
-
-        public override void OnAttachedToWindow()
-        {
-            // Call base method.
-            base.OnAttachedToWindow();
-
-            // Set title to device.
-            Window.SetTitle(device?.Name);
-        }
-
-        protected override void OnDestroy()
-        {
-            brick.Dispose();
-
-            // Call base method.
-            base.OnDestroy();
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            //change main_compat_menu
-            MenuInflater.Inflate(Resource.Menu.ControllerMenu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            if (item.ItemId == Resource.Id.settings)
-            {
-                StartActivity(new Intent(this, typeof(SettingsActivity)));
-                return true;
-            }
-            return base.OnOptionsItemSelected(item);
-        }
+        #endregion
     }
 }
