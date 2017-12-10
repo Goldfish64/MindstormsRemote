@@ -29,6 +29,7 @@ using Android.Preferences;
 using Android.Support.V7.App;
 using Android.Widget;
 using MindstormsRemote.Framework;
+using System;
 
 namespace MindstormsRemote
 {
@@ -41,6 +42,12 @@ namespace MindstormsRemote
         #region Private variables
 
         private ISharedPreferencesEditor prefEditor;
+        private RadioButton rbnMotorLPortA;
+        private RadioButton rbnMotorLPortB;
+        private RadioButton rbnMotorLPortC;
+        private RadioButton rbnMotorRPortA;
+        private RadioButton rbnMotorRPortB;
+        private RadioButton rbnMotorRPortC;
 
         #endregion
 
@@ -86,17 +93,164 @@ namespace MindstormsRemote
             spinSensor4.Tag = Constants.PrefSensor4Type;
             spinSensor4.SetSelection(preferences.GetInt(Constants.PrefSensor4Type, (int)Sensors.None));
             spinSensor4.ItemSelected += OnSensorSelected;
+
+            // Get motor radio buttons.
+            rbnMotorLPortA = FindViewById<RadioButton>(Resource.Id.RbnMotorLPortA);
+            rbnMotorLPortA.Click += OnMotorRadioButtonClick;
+            rbnMotorLPortB = FindViewById<RadioButton>(Resource.Id.RbnMotorLPortB);
+            rbnMotorLPortB.Click += OnMotorRadioButtonClick;
+            rbnMotorLPortC = FindViewById<RadioButton>(Resource.Id.RbnMotorLPortC);
+            rbnMotorLPortC.Click += OnMotorRadioButtonClick;
+            rbnMotorRPortA = FindViewById<RadioButton>(Resource.Id.RbnMotorRPortA);
+            rbnMotorRPortA.Click += OnMotorRadioButtonClick;
+            rbnMotorRPortB = FindViewById<RadioButton>(Resource.Id.RbnMotorRPortB);
+            rbnMotorRPortB.Click += OnMotorRadioButtonClick;
+            rbnMotorRPortC = FindViewById<RadioButton>(Resource.Id.RbnMotorRPortC);
+            rbnMotorRPortC.Click += OnMotorRadioButtonClick;
+
+            // Get left motor setting.
+            var motorLeftPort = preferences.GetInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortB);
+            switch (motorLeftPort)
+            {
+                case Constants.PrefValueMotorPortA:
+                    rbnMotorLPortA.Checked = true;
+                    rbnMotorLPortB.Checked = rbnMotorLPortC.Checked = false;
+                    break;
+
+                case Constants.PrefValueMotorPortC:
+                    rbnMotorLPortC.Checked = true;
+                    rbnMotorLPortA.Checked = rbnMotorLPortB.Checked = false;
+                    break;
+
+                default:
+                    rbnMotorLPortB.Checked = true;
+                    rbnMotorLPortA.Checked = rbnMotorLPortC.Checked = false;
+                    break;
+            }
+
+            // Get right motor and ensure its not the same as left.
+            var motorRightPort = preferences.GetInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortC);
+            if (motorRightPort == motorLeftPort)
+                motorRightPort = Constants.PrefValueMotorPortC;
+
+            // Set radio buttons for right motor.
+            switch (motorRightPort)
+            {
+                case Constants.PrefValueMotorPortA:
+                    rbnMotorRPortA.Checked = true;
+                    rbnMotorRPortB.Checked = rbnMotorRPortC.Checked = false;
+                    break;
+
+                case Constants.PrefValueMotorPortB:
+                    rbnMotorRPortB.Checked = true;
+                    rbnMotorRPortA.Checked = rbnMotorRPortC.Checked = false;
+                    break;
+
+                default:
+                    rbnMotorRPortC.Checked = true;
+                    rbnMotorRPortA.Checked = rbnMotorRPortB.Checked = false;
+                    break;
+            }
+
+            // Save motor settings.
+            prefEditor.PutInt(Constants.PrefMotorLPort, motorLeftPort);
+            prefEditor.PutInt(Constants.PrefMotorRPort, motorRightPort);
+            prefEditor.Commit();
+
+            // Get drive motor brake setting.
+            var chkBrakeDriveMotors = FindViewById<CheckBox>(Resource.Id.ChkBrakeDriveMotors);
+            chkBrakeDriveMotors.Checked = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);
+            chkBrakeDriveMotors.CheckedChange += OnBrakeDriveMotorsCheckChanged;
         }
 
+        /// <summary>
+        /// Handles the Selected event of the sensor spinners.
+        /// </summary>
         private void OnSensorSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             // Save sensor type.
-            var spinner = sender as Spinner;
-            if (spinner != null)
+            if (sender is Spinner spinner)
             {
                 prefEditor.PutInt(spinner.Tag.ToString(), spinner.SelectedItemPosition);
                 prefEditor.Commit();
             }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the motor radio buttons.
+        /// </summary>
+        private void OnMotorRadioButtonClick(object sender, EventArgs e)
+        {
+            // Ensure only one motor is attached to a port.
+            if (rbnMotorLPortA.Checked && rbnMotorRPortA.Checked)
+            {
+                if (sender == rbnMotorLPortA)
+                {
+                    rbnMotorRPortA.Checked = false;
+                    rbnMotorRPortB.Checked = true;
+                }
+                else if (sender == rbnMotorRPortA)
+                {
+                    rbnMotorLPortA.Checked = false;
+                    rbnMotorLPortB.Checked = true;
+                }
+            }
+            else if (rbnMotorLPortB.Checked && rbnMotorRPortB.Checked)
+            {
+                if (sender == rbnMotorLPortB)
+                {
+                    rbnMotorRPortB.Checked = false;
+                    rbnMotorRPortC.Checked = true;
+                }
+                else if (sender == rbnMotorRPortB)
+                {
+                    rbnMotorLPortB.Checked = false;
+                    rbnMotorLPortC.Checked = true;
+                }
+            }
+            else if (rbnMotorLPortC.Checked && rbnMotorRPortC.Checked)
+            {
+                if (sender == rbnMotorLPortC)
+                {
+                    rbnMotorRPortC.Checked = false;
+                    rbnMotorRPortB.Checked = true;
+                }
+                else if (sender == rbnMotorRPortC)
+                {
+                    rbnMotorLPortC.Checked = false;
+                    rbnMotorLPortB.Checked = true;
+                }
+            }
+
+            // Save motor settings.
+            if (rbnMotorLPortA.Checked)
+                prefEditor.PutInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortA);
+            else if (rbnMotorLPortB.Checked)
+                prefEditor.PutInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortB);
+            else if (rbnMotorLPortC.Checked)
+                prefEditor.PutInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortC);
+
+            if (rbnMotorRPortA.Checked)
+                prefEditor.PutInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortA);
+            else if (rbnMotorRPortB.Checked)
+                prefEditor.PutInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortB);
+            else if (rbnMotorRPortC.Checked)
+                prefEditor.PutInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortC);
+
+            // Commit changes.
+            prefEditor.Commit();
+        }
+
+        /// <summary>
+        /// Handles the CheckChanged event for the brake drive motors checkbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBrakeDriveMotorsCheckChanged(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            // Save brake setting.
+            prefEditor.PutBoolean(Constants.PrefMotorBrakeDrive, e.IsChecked);
+            prefEditor.Commit();
         }
 
         #endregion

@@ -22,7 +22,6 @@
 * IN THE SOFTWARE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 using System;
 using Android.App;
 using Android.Bluetooth;

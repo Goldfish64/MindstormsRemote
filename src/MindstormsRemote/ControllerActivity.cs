@@ -49,7 +49,15 @@ namespace MindstormsRemote
         private NxtBrick brick;
         private NxtMotor motorL;
         private NxtMotor motorR;
+
+        private TextView txtSensor1;
+        private TextView txtSensor2;
+        private TextView txtSensor3;
+        private TextView txtSensor4;
+        private TextView txtMotors;
+
         private byte powerLevel = 75;
+        private bool brakeDriveMotors = false;
 
         #endregion
 
@@ -78,11 +86,18 @@ namespace MindstormsRemote
             FindViewById<Button>(Resource.Id.BtnDriveS).Touch += OnControllerButtonTouch;
             FindViewById<Button>(Resource.Id.BtnDriveSE).Touch += OnControllerButtonTouch;
 
+            // Get widget references..
+            txtSensor1 = FindViewById<TextView>(Resource.Id.TxtSensor1);
+            txtSensor2 = FindViewById<TextView>(Resource.Id.TxtSensor2);
+            txtSensor3 = FindViewById<TextView>(Resource.Id.TxtSensor3);
+            txtSensor4 = FindViewById<TextView>(Resource.Id.TxtSensor4);
+            txtMotors = FindViewById<TextView>(Resource.Id.TxtMotors);
+
             // Clear text fields.
-            FindViewById<TextView>(Resource.Id.TxtSensor1).Text = "Port 1: None";
-            FindViewById<TextView>(Resource.Id.TxtSensor2).Text = "Port 2: None";
-            FindViewById<TextView>(Resource.Id.TxtSensor3).Text = "Port 3: None";
-            FindViewById<TextView>(Resource.Id.TxtSensor4).Text = "Port 4: None";
+            txtSensor1.Text = "Port 1: None";
+            txtSensor2.Text = "Port 2: None";
+            txtSensor3.Text = "Port 3: None";
+            txtSensor4.Text = "Port 4: None";
 
             await Task.Run(() =>
             {
@@ -102,8 +117,6 @@ namespace MindstormsRemote
                 brick.PlayTone(1000, 100);
                 motorL = new NxtMotor();
                 motorR = new NxtMotor();
-                brick.MotorC = motorL;
-                brick.MotorB = motorR;
                 brick.PollingInterval = 1000;
 
                 // Load up prefernces.
@@ -144,6 +157,56 @@ namespace MindstormsRemote
                     brick.Sensor4.Polled += OnSensor4Polled;
                     brick.Sensor4.PollingInterval = 500;
                 }
+
+                // Configure motors.
+                // Get left motor setting.
+                var motorLeftPort = preferences.GetInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortB);
+                switch (motorLeftPort)
+                {
+                    case Constants.PrefValueMotorPortA:
+                        brick.MotorA = motorL;
+                        break;
+
+                    case Constants.PrefValueMotorPortC:
+                        brick.MotorC = motorL;
+                        break;
+
+                    default:
+                        brick.MotorB = motorL;
+                        break;
+                }
+
+                // Get right motor and ensure its not the same as left.
+                var motorRightPort = preferences.GetInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortC);
+                if (motorRightPort == motorLeftPort)
+                    motorRightPort = Constants.PrefValueMotorPortC;
+
+                // Assign right motor.
+                switch (motorRightPort)
+                {
+                    case Constants.PrefValueMotorPortA:
+                        brick.MotorA = motorR;
+                        break;
+
+                    case Constants.PrefValueMotorPortB:
+                        brick.MotorB = motorR;
+                        break;
+
+                    default:
+                        brick.MotorC = motorR;
+                        break;
+                }
+
+                // Get drive motors brake setting.
+                brakeDriveMotors = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);
+                if (brakeDriveMotors)
+                {
+                    motorL.Off();
+                    motorR.Off();
+                }
+
+                // Update motor TextView.
+                RunOnUiThread(() => txtMotors.Text = $"Left motor: {GetMotorPortString(motorLeftPort)}\nRight motor: {GetMotorPortString(motorRightPort)}");
             });
 
             // Show UI.
@@ -206,13 +269,70 @@ namespace MindstormsRemote
 
             // Clear text fields.
             if (brick.Sensor1 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor1).Text = "Port 1: None";
+                txtSensor1.Text = "Port 1: None";
             if (brick.Sensor2 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor2).Text = "Port 2: None";
+                txtSensor2.Text = "Port 2: None";
             if (brick.Sensor3 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor3).Text = "Port 3: None";
+                txtSensor3.Text = "Port 3: None";
             if (brick.Sensor4 == null)
-                FindViewById<TextView>(Resource.Id.TxtSensor4).Text = "Port 4: None";
+                txtSensor4.Text = "Port 4: None";
+
+            // Clear motors.
+            brick.MotorA = null;
+            brick.MotorB = null;
+            brick.MotorC = null;
+
+            // Configure motors.
+            // Get left motor setting.
+            var motorLeftPort = preferences.GetInt(Constants.PrefMotorLPort, Constants.PrefValueMotorPortB);
+            switch (motorLeftPort)
+            {
+                case Constants.PrefValueMotorPortA:
+                    brick.MotorA = motorL;
+                    break;
+
+                case Constants.PrefValueMotorPortC:
+                    brick.MotorC = motorL;
+                    break;
+
+                default:
+                    brick.MotorB = motorL;
+                    break;
+            }
+
+            // Get right motor and ensure its not the same as left.
+            var motorRightPort = preferences.GetInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortC);
+            if (motorRightPort == motorLeftPort)
+                motorRightPort = Constants.PrefValueMotorPortC;
+
+            // Assign right motor.
+            switch (motorRightPort)
+            {
+                case Constants.PrefValueMotorPortA:
+                    brick.MotorA = motorR;
+                    break;
+
+                case Constants.PrefValueMotorPortB:
+                    brick.MotorB = motorR;
+                    break;
+
+                default:
+                    brick.MotorC = motorR;
+                    break;
+            }
+
+            // Get drive motors brake setting.
+            brakeDriveMotors = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);
+            if (brakeDriveMotors)
+            {
+                motorL.Off();
+                motorR.Off();
+            }
+            else
+            {
+                motorL.Coast();
+                motorR.Coast();
+            }
         }
 
         /// <summary>
@@ -243,6 +363,24 @@ namespace MindstormsRemote
 
                 case Sensors.Ultrasonic:
                     return new NxtUltrasonicSensor();
+
+                default:
+                    return null;
+            }
+        }
+
+        private string GetMotorPortString(int port)
+        {
+            switch (port)
+            {
+                case Constants.PrefValueMotorPortA:
+                    return "Port A";
+
+                case Constants.PrefValueMotorPortB:
+                    return "Port B";
+
+                case Constants.PrefValueMotorPortC:
+                    return "Port C";
 
                 default:
                     return null;
@@ -346,8 +484,16 @@ namespace MindstormsRemote
                 FindViewById<Button>(Resource.Id.BtnDriveE).Pressed || FindViewById<Button>(Resource.Id.BtnDriveSW).Pressed ||
                 FindViewById<Button>(Resource.Id.BtnDriveS).Pressed || FindViewById<Button>(Resource.Id.BtnDriveSE).Pressed))
             {
-                motorL.Coast();
-                motorR.Coast();
+                if (brakeDriveMotors)
+                {
+                    motorL.Off();
+                    motorR.Off();
+                }
+                else
+                {
+                    motorL.Coast();
+                    motorR.Coast();
+                }
             }
         }
 
@@ -384,11 +530,8 @@ namespace MindstormsRemote
         /// </summary>
         private void OnSensor1Polled(NxtDevice sender)
         {
-            RunOnUiThread(() =>
-            {
-                var textView = FindViewById<TextView>(Resource.Id.TxtSensor1);
-                textView.Text = string.Format("Port 1: {0}\n{1}", sender.FriendlyName, sender.Value);
-            });
+            // Update TextView.
+            RunOnUiThread(() => txtSensor1.Text = string.Format("Port 1: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -396,11 +539,8 @@ namespace MindstormsRemote
         /// </summary>
         private void OnSensor2Polled(NxtDevice sender)
         {
-            RunOnUiThread(() =>
-            {
-                var textView = FindViewById<TextView>(Resource.Id.TxtSensor2);
-                textView.Text = string.Format("Port 2: {0}\n{1}", sender.FriendlyName, sender.Value);
-            });
+            // Update TextView.
+            RunOnUiThread(() => txtSensor2.Text = string.Format("Port 2: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -408,11 +548,8 @@ namespace MindstormsRemote
         /// </summary>
         private void OnSensor3Polled(NxtDevice sender)
         {
-            RunOnUiThread(() =>
-            {
-                var textView = FindViewById<TextView>(Resource.Id.TxtSensor3);
-                textView.Text = string.Format("Port 3: {0}\n{1}", sender.FriendlyName, sender.Value);
-            });
+            // Update TextView.
+            RunOnUiThread(() => txtSensor3.Text = string.Format("Port 3: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -420,11 +557,8 @@ namespace MindstormsRemote
         /// </summary>
         private void OnSensor4Polled(NxtDevice sender)
         {
-            RunOnUiThread(() =>
-            {
-                var textView = FindViewById<TextView>(Resource.Id.TxtSensor4);
-                textView.Text = string.Format("Port 4: {0}\n{1}", sender.FriendlyName, sender.Value);
-            });
+            // Update TextView.
+            RunOnUiThread(() => txtSensor4.Text = string.Format("Port 4: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         #endregion

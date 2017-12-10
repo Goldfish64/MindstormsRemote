@@ -151,7 +151,7 @@ namespace Blueberry.Nxt
 
             // Get byte.
             var result = SendBytes(new byte[] { Address, (byte)(0x42 + index) }, 1);
-            if (result != null)
+            if (result?.Length > 0)
                 return result[0];
             else
                 return null;

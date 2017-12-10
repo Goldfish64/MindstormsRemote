@@ -4,8 +4,16 @@
   <string name="Scan">Scan</string>
   <string name="Connect">Connect</string>
   <string name="AvailableBricks">Available bricks</string>
-  <string name="sensor1">Sensor 1:</string>
-  <string name="sensor2">Sensor 2:</string>
-  <string name="sensor3">Sensor 3:</string>
-  <string name="sensor4">Sensor 4:</string>
+  <string name="SensorValues">Sensor values</string>
+  <string name="MotorControl">Motor control</string>
+  <string name="Sensor1">Sensor 1</string>
+  <string name="Sensor2">Sensor 2</string>
+  <string name="Sensor3">Sensor 3</string>
+  <string name="Sensor4">Sensor 4</string>
+  <string name="MotorL">Left motor</string>
+  <string name="MotorR">Right motor</string>
+  <string name="PortA">Port A</string>
+  <string name="PortB">Port B</string>
+  <string name="PortC">Port C</string>
+  <string name="BrakeDriveMotors">Brake drive motors on stop</string>
 </resources>

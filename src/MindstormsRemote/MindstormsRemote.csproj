@@ -81,7 +81,7 @@
     <Compile Include="Framework\BluetoothDevicesAdapter.cs" />
     <Compile Include="Framework\Constants.cs" />
     <Compile Include="Framework\EventReceiver.cs" />
-    <Compile Include="Framework\Sensors.cs" />
+    <Compile Include="Framework\Enums.cs" />
     <Compile Include="Framework\SensorsAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -113,7 +113,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Dimens.xml" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blueberry.Android\Blueberry.Android.csproj">
       <Project>{204335f5-4a02-495c-95c0-7113140608d2}</Project>

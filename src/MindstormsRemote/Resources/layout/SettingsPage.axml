@@ -9,9 +9,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/AppMargin"
         android:layout_below="@id/ToolbarSettings">
         <TextView
-            android:text="@string/sensor1"
+            android:text="@string/Sensor1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Spinner
@@ -20,7 +21,7 @@
             android:id="@+id/SpinSensor1"
             android:spinnerMode="dialog" />
         <TextView
-            android:text="@string/sensor2"
+            android:text="@string/Sensor2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Spinner
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/SpinSensor2" />
         <TextView
-            android:text="@string/sensor3"
+            android:text="@string/Sensor3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Spinner
@@ -36,12 +37,64 @@
             android:layout_height="wrap_content"
             android:id="@+id/SpinSensor3" />
         <TextView
-            android:text="@string/sensor4"
+            android:text="@string/Sensor4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/SpinSensor4" />
+        <TextView
+            android:text="@string/MotorL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/RbnMotorLPortA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortA" />
+            <RadioButton
+                android:id="@+id/RbnMotorLPortB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortB" />
+            <RadioButton
+                android:id="@+id/RbnMotorLPortC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortC" />
+        </RadioGroup>
+        <TextView
+            android:text="@string/MotorR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/RbnMotorRPortA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortA" />
+            <RadioButton
+                android:id="@+id/RbnMotorRPortB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortB" />
+            <RadioButton
+                android:id="@+id/RbnMotorRPortC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PortC" />
+        </RadioGroup>
+      <CheckBox android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ChkBrakeDriveMotors"
+                android:text="@string/BrakeDriveMotors"/>
     </LinearLayout>
 </RelativeLayout>
