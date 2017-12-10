@@ -94,9 +94,9 @@
 0 MLCAD BTG Bumper assembly
 1 72 -210 -92 -265 0 -1 0 0 0 -1 1 0 0 32009.dat
 0 MLCAD BTG Bumper assembly
-1 25 50 68 -265 0 1 0 0 0 -1 -1 0 0 32140.dat
+1 25 -70 68 -265 0 -1 0 0 0 -1 1 0 0 32140.dat
 0 MLCAD BTG Bumper assembly
-1 25 -70 68 -265 0 1 0 0 0 -1 -1 0 0 32140.dat
+1 25 50 68 -265 0 -1 0 0 0 -1 1 0 0 32140.dat
 0 MLCAD BTG Bumper assembly
 1 71 20 68 -265 0 0 -1 0 -1 0 -1 0 0 59443.dat
 0 MLCAD BTG Bumper assembly
