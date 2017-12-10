@@ -1825,77 +1825,86 @@ namespace MindstormsRemote
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070074
-			public const int BtnDriveE = 2131165300;
-			
-			// aapt resource value: 0x7f07006f
-			public const int BtnDriveN = 2131165295;
-			
-			// aapt resource value: 0x7f070070
-			public const int BtnDriveNE = 2131165296;
-			
-			// aapt resource value: 0x7f07006e
-			public const int BtnDriveNW = 2131165294;
-			
 			// aapt resource value: 0x7f070076
-			public const int BtnDriveS = 2131165302;
-			
-			// aapt resource value: 0x7f070077
-			public const int BtnDriveSE = 2131165303;
-			
-			// aapt resource value: 0x7f070075
-			public const int BtnDriveSW = 2131165301;
+			public const int BtnDriveE = 2131165302;
 			
 			// aapt resource value: 0x7f070071
-			public const int BtnDriveW = 2131165297;
+			public const int BtnDriveN = 2131165297;
 			
-			// aapt resource value: 0x7f070082
-			public const int LstBluetoothDevices = 2131165314;
+			// aapt resource value: 0x7f070072
+			public const int BtnDriveNE = 2131165298;
 			
-			// aapt resource value: 0x7f070091
-			public const int SpinSensor1 = 2131165329;
+			// aapt resource value: 0x7f070070
+			public const int BtnDriveNW = 2131165296;
 			
-			// aapt resource value: 0x7f070092
-			public const int SpinSensor2 = 2131165330;
+			// aapt resource value: 0x7f070078
+			public const int BtnDriveS = 2131165304;
 			
-			// aapt resource value: 0x7f070093
-			public const int SpinSensor3 = 2131165331;
+			// aapt resource value: 0x7f070079
+			public const int BtnDriveSE = 2131165305;
 			
-			// aapt resource value: 0x7f070094
-			public const int SpinSensor4 = 2131165332;
-			
-			// aapt resource value: 0x7f070095
-			public const int SpinnerItemLayout = 2131165333;
-			
-			// aapt resource value: 0x7f070097
-			public const int Toolbar = 2131165335;
-			
-			// aapt resource value: 0x7f070069
-			public const int ToolbarController = 2131165289;
-			
-			// aapt resource value: 0x7f070081
-			public const int ToolbarMain = 2131165313;
-			
-			// aapt resource value: 0x7f070090
-			public const int ToolbarSettings = 2131165328;
+			// aapt resource value: 0x7f070077
+			public const int BtnDriveSW = 2131165303;
 			
 			// aapt resource value: 0x7f070073
-			public const int TxtBattery = 2131165299;
+			public const int BtnDriveW = 2131165299;
+			
+			// aapt resource value: 0x7f070084
+			public const int BtnScan = 2131165316;
+			
+			// aapt resource value: 0x7f070069
+			public const int ControllerProgressBar = 2131165289;
+			
+			// aapt resource value: 0x7f070086
+			public const int LstBluetoothDevices = 2131165318;
+			
+			// aapt resource value: 0x7f070085
+			public const int PrgSearching = 2131165317;
 			
 			// aapt resource value: 0x7f07006a
-			public const int TxtSensor1 = 2131165290;
+			public const int RootControllerLayout = 2131165290;
+			
+			// aapt resource value: 0x7f070095
+			public const int SpinSensor1 = 2131165333;
+			
+			// aapt resource value: 0x7f070096
+			public const int SpinSensor2 = 2131165334;
+			
+			// aapt resource value: 0x7f070097
+			public const int SpinSensor3 = 2131165335;
+			
+			// aapt resource value: 0x7f070098
+			public const int SpinSensor4 = 2131165336;
+			
+			// aapt resource value: 0x7f07009a
+			public const int Toolbar = 2131165338;
 			
 			// aapt resource value: 0x7f07006b
-			public const int TxtSensor2 = 2131165291;
-			
-			// aapt resource value: 0x7f07006c
-			public const int TxtSensor3 = 2131165292;
-			
-			// aapt resource value: 0x7f07006d
-			public const int TxtSensor4 = 2131165293;
+			public const int ToolbarController = 2131165291;
 			
 			// aapt resource value: 0x7f070083
-			public const int action0 = 2131165315;
+			public const int ToolbarMain = 2131165315;
+			
+			// aapt resource value: 0x7f070094
+			public const int ToolbarSettings = 2131165332;
+			
+			// aapt resource value: 0x7f070075
+			public const int TxtBattery = 2131165301;
+			
+			// aapt resource value: 0x7f07006c
+			public const int TxtSensor1 = 2131165292;
+			
+			// aapt resource value: 0x7f07006d
+			public const int TxtSensor2 = 2131165293;
+			
+			// aapt resource value: 0x7f07006e
+			public const int TxtSensor3 = 2131165294;
+			
+			// aapt resource value: 0x7f07006f
+			public const int TxtSensor4 = 2131165295;
+			
+			// aapt resource value: 0x7f070087
+			public const int action0 = 2131165319;
 			
 			// aapt resource value: 0x7f07005a
 			public const int action_bar = 2131165274;
@@ -1921,8 +1930,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07005b
 			public const int action_context_bar = 2131165275;
 			
-			// aapt resource value: 0x7f070087
-			public const int action_divider = 2131165319;
+			// aapt resource value: 0x7f07008b
+			public const int action_divider = 2131165323;
 			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
@@ -1954,14 +1963,14 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07002a
 			public const int bottom = 2131165226;
 			
-			// aapt resource value: 0x7f070072
-			public const int button1 = 2131165298;
+			// aapt resource value: 0x7f070074
+			public const int button1 = 2131165300;
 			
 			// aapt resource value: 0x7f070044
 			public const int buttonPanel = 2131165252;
 			
-			// aapt resource value: 0x7f070084
-			public const int cancel_action = 2131165316;
+			// aapt resource value: 0x7f070088
+			public const int cancel_action = 2131165320;
 			
 			// aapt resource value: 0x7f07002b
 			public const int center = 2131165227;
@@ -1975,8 +1984,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070052
 			public const int checkbox = 2131165266;
 			
-			// aapt resource value: 0x7f07008a
-			public const int chronometer = 2131165322;
+			// aapt resource value: 0x7f07008e
+			public const int chronometer = 2131165326;
 			
 			// aapt resource value: 0x7f070033
 			public const int clip_horizontal = 2131165235;
@@ -2002,20 +2011,20 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070040
 			public const int default_activity_button = 2131165248;
 			
-			// aapt resource value: 0x7f070079
-			public const int design_bottom_sheet = 2131165305;
+			// aapt resource value: 0x7f07007b
+			public const int design_bottom_sheet = 2131165307;
+			
+			// aapt resource value: 0x7f070082
+			public const int design_menu_item_action_area = 2131165314;
+			
+			// aapt resource value: 0x7f070081
+			public const int design_menu_item_action_area_stub = 2131165313;
 			
 			// aapt resource value: 0x7f070080
-			public const int design_menu_item_action_area = 2131165312;
+			public const int design_menu_item_text = 2131165312;
 			
 			// aapt resource value: 0x7f07007f
-			public const int design_menu_item_action_area_stub = 2131165311;
-			
-			// aapt resource value: 0x7f07007e
-			public const int design_menu_item_text = 2131165310;
-			
-			// aapt resource value: 0x7f07007d
-			public const int design_navigation_view = 2131165309;
+			public const int design_navigation_view = 2131165311;
 			
 			// aapt resource value: 0x7f07000e
 			public const int disableHome = 2131165198;
@@ -2026,8 +2035,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07001c
 			public const int end = 2131165212;
 			
-			// aapt resource value: 0x7f07008f
-			public const int end_padder = 2131165327;
+			// aapt resource value: 0x7f070093
+			public const int end_padder = 2131165331;
 			
 			// aapt resource value: 0x7f070023
 			public const int enterAlways = 2131165219;
@@ -2071,8 +2080,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07003f
 			public const int image = 2131165247;
 			
-			// aapt resource value: 0x7f07008e
-			public const int info = 2131165326;
+			// aapt resource value: 0x7f070092
+			public const int info = 2131165330;
 			
 			// aapt resource value: 0x7f070000
 			public const int item_touch_helper_previous_elevation = 2131165184;
@@ -2080,11 +2089,11 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07002f
 			public const int left = 2131165231;
 			
-			// aapt resource value: 0x7f070088
-			public const int line1 = 2131165320;
-			
 			// aapt resource value: 0x7f07008c
-			public const int line3 = 2131165324;
+			public const int line1 = 2131165324;
+			
+			// aapt resource value: 0x7f070090
+			public const int line3 = 2131165328;
 			
 			// aapt resource value: 0x7f07000b
 			public const int listMode = 2131165195;
@@ -2092,8 +2101,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070041
 			public const int list_item = 2131165249;
 			
-			// aapt resource value: 0x7f070086
-			public const int media_actions = 2131165318;
+			// aapt resource value: 0x7f07008a
+			public const int media_actions = 2131165322;
 			
 			// aapt resource value: 0x7f07001d
 			public const int middle = 2131165213;
@@ -2104,8 +2113,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070016
 			public const int multiply = 2131165206;
 			
-			// aapt resource value: 0x7f07007c
-			public const int navigation_header_container = 2131165308;
+			// aapt resource value: 0x7f07007e
+			public const int navigation_header_container = 2131165310;
 			
 			// aapt resource value: 0x7f070021
 			public const int never = 2131165217;
@@ -2133,9 +2142,6 @@ namespace MindstormsRemote
 			
 			// aapt resource value: 0x7f070054
 			public const int radio = 2131165268;
-			
-			// aapt resource value: 0x7f070098
-			public const int refresh = 2131165336;
 			
 			// aapt resource value: 0x7f070030
 			public const int right = 2131165232;
@@ -2191,8 +2197,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070068
 			public const int select_dialog_listview = 2131165288;
 			
-			// aapt resource value: 0x7f070099
-			public const int settings = 2131165337;
+			// aapt resource value: 0x7f07009b
+			public const int settings = 2131165339;
 			
 			// aapt resource value: 0x7f070053
 			public const int shortcut = 2131165267;
@@ -2206,11 +2212,11 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070013
 			public const int showTitle = 2131165203;
 			
-			// aapt resource value: 0x7f07007b
-			public const int snackbar_action = 2131165307;
+			// aapt resource value: 0x7f07007d
+			public const int snackbar_action = 2131165309;
 			
-			// aapt resource value: 0x7f07007a
-			public const int snackbar_text = 2131165306;
+			// aapt resource value: 0x7f07007c
+			public const int snackbar_text = 2131165308;
 			
 			// aapt resource value: 0x7f070027
 			public const int snap = 2131165223;
@@ -2233,8 +2239,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070031
 			public const int start = 2131165233;
 			
-			// aapt resource value: 0x7f070085
-			public const int status_bar_latest_event_content = 2131165317;
+			// aapt resource value: 0x7f070089
+			public const int status_bar_latest_event_content = 2131165321;
 			
 			// aapt resource value: 0x7f070065
 			public const int submit_area = 2131165285;
@@ -2242,20 +2248,20 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07000d
 			public const int tabMode = 2131165197;
 			
-			// aapt resource value: 0x7f07008d
-			public const int text = 2131165325;
+			// aapt resource value: 0x7f070091
+			public const int text = 2131165329;
 			
-			// aapt resource value: 0x7f07008b
-			public const int text2 = 2131165323;
+			// aapt resource value: 0x7f07008f
+			public const int text2 = 2131165327;
 			
-			// aapt resource value: 0x7f070096
-			public const int textItem = 2131165334;
+			// aapt resource value: 0x7f070099
+			public const int textItem = 2131165337;
 			
 			// aapt resource value: 0x7f07004d
 			public const int textSpacerNoButtons = 2131165261;
 			
-			// aapt resource value: 0x7f070089
-			public const int time = 2131165321;
+			// aapt resource value: 0x7f07008d
+			public const int time = 2131165325;
 			
 			// aapt resource value: 0x7f070043
 			public const int title = 2131165251;
@@ -2269,8 +2275,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070047
 			public const int topPanel = 2131165255;
 			
-			// aapt resource value: 0x7f070078
-			public const int touch_outside = 2131165304;
+			// aapt resource value: 0x7f07007a
+			public const int touch_outside = 2131165306;
 			
 			// aapt resource value: 0x7f070009
 			public const int up = 2131165193;
@@ -2488,16 +2494,13 @@ namespace MindstormsRemote
 			public const int SettingsPage = 2130968626;
 			
 			// aapt resource value: 0x7f040033
-			public const int SpinnerItemLayout = 2130968627;
+			public const int support_simple_spinner_dropdown_item = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int support_simple_spinner_dropdown_item = 2130968628;
+			public const int TextViewItem = 2130968628;
 			
 			// aapt resource value: 0x7f040035
-			public const int TextViewItem = 2130968629;
-			
-			// aapt resource value: 0x7f040036
-			public const int Toolbar = 2130968630;
+			public const int Toolbar = 2130968629;
 			
 			static Layout()
 			{
@@ -2513,10 +2516,7 @@ namespace MindstormsRemote
 		{
 			
 			// aapt resource value: 0x7f0d0000
-			public const int ConnectMenu = 2131558400;
-			
-			// aapt resource value: 0x7f0d0001
-			public const int ControllerMenu = 2131558401;
+			public const int ControllerMenu = 2131558400;
 			
 			static Menu()
 			{
@@ -2546,6 +2546,15 @@ namespace MindstormsRemote
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f08001a
+			public const int AvailableBricks = 2131230746;
+			
+			// aapt resource value: 0x7f080019
+			public const int Connect = 2131230745;
+			
+			// aapt resource value: 0x7f080018
+			public const int Scan = 2131230744;
 			
 			// aapt resource value: 0x7f080000
 			public const int abc_action_bar_home_description = 2131230720;
@@ -2616,20 +2625,17 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f080016
 			public const int character_counter_pattern = 2131230742;
 			
-			// aapt resource value: 0x7f080018
-			public const int connect = 2131230744;
-			
-			// aapt resource value: 0x7f080019
-			public const int sensor1 = 2131230745;
-			
-			// aapt resource value: 0x7f08001a
-			public const int sensor2 = 2131230746;
-			
 			// aapt resource value: 0x7f08001b
-			public const int sensor3 = 2131230747;
+			public const int sensor1 = 2131230747;
 			
 			// aapt resource value: 0x7f08001c
-			public const int sensor4 = 2131230748;
+			public const int sensor2 = 2131230748;
+			
+			// aapt resource value: 0x7f08001d
+			public const int sensor3 = 2131230749;
+			
+			// aapt resource value: 0x7f08001e
+			public const int sensor4 = 2131230750;
 			
 			// aapt resource value: 0x7f080013
 			public const int status_bar_notification_info_overflow = 2131230739;

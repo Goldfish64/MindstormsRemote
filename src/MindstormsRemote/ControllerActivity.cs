@@ -145,6 +145,10 @@ namespace MindstormsRemote
                     brick.Sensor4.PollingInterval = 500;
                 }
             });
+
+            // Show UI.
+            FindViewById<ProgressBar>(Resource.Id.ControllerProgressBar).Visibility = ViewStates.Gone;
+            FindViewById<RelativeLayout>(Resource.Id.RootControllerLayout).Visibility = ViewStates.Visible;
         }
 
         /// <summary>
@@ -247,6 +251,7 @@ namespace MindstormsRemote
 
         protected override void OnDestroy()
         {
+            // Clean up brick.
             brick.Dispose();
 
             // Call base method.
@@ -367,7 +372,7 @@ namespace MindstormsRemote
             RunOnUiThread(() =>
             {
                 // Brick disconnected, show error and navigate back.
-                var toast = Toast.MakeText(Application.Context, "Connection to NXT lost.", ToastLength.Short);
+                var toast = Toast.MakeText(Application.Context, "NXT disconnected.", ToastLength.Short);
                 toast.Show();
 
                 Finish();

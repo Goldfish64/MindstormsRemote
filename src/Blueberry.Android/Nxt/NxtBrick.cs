@@ -217,6 +217,12 @@ namespace Blueberry.Nxt
                 // UUID is well-known for Serial Port Protocol (SPP) devices.
                 bluetoothSocket = bluetoothDevice.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
                 bluetoothSocket.Connect();
+
+                // Re-attach sensors.
+                sensor1?.Attach(this, NxtInputPorts.Port1);
+                sensor2?.Attach(this, NxtInputPorts.Port2);
+                sensor3?.Attach(this, NxtInputPorts.Port3);
+                sensor4?.Attach(this, NxtInputPorts.Port4);
             }
             catch (IOException e)
             {
@@ -229,10 +235,25 @@ namespace Blueberry.Nxt
         /// </summary>
         public void Disconnect()
         {
+            // Are we connected?
+            if (!IsConnected)
+                throw new InvalidOperationException();
+
             try
             {
+                // Stop any motors and shut off sensors.
+                motorA?.Coast();
+                motorB?.Coast();
+                motorC?.Coast();
+
+                sensor1?.Disconnect();
+                sensor2?.Disconnect();
+                sensor3?.Disconnect();
+                sensor4?.Disconnect();
+
                 // Close socket.
                 bluetoothSocket?.Close();
+                Disconnected?.Invoke(this, EventArgs.Empty);
             }
             catch (IOException e)
             {
@@ -248,7 +269,7 @@ namespace Blueberry.Nxt
         internal byte[] SendPacket(byte[] data)
         {
             // Are we connected?
-            if (bluetoothSocket?.IsConnected != true)
+            if (!IsConnected)
                 throw new InvalidOperationException();
 
             // Lock to ensure only a single thread sends/receives at a time.
@@ -281,6 +302,11 @@ namespace Blueberry.Nxt
                     }
                 }
                 catch (IOException e)
+                {
+                    Disconnected?.Invoke(this, EventArgs.Empty);
+                    throw new NxtCommunicationException("There was an error communicating with the NXT brick.", e);
+                }
+                catch (ObjectDisposedException e)
                 {
                     Disconnected?.Invoke(this, EventArgs.Empty);
                     throw new NxtCommunicationException("There was an error communicating with the NXT brick.", e);

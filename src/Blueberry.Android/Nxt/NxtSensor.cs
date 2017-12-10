@@ -117,6 +117,16 @@ namespace Blueberry.Nxt
             Port = 0;
         }
 
+        /// <summary>
+        /// Disconnects the sensor. Used when the brick is being disconnected.
+        /// </summary>
+        internal virtual void Disconnect()
+        {
+            // Stop polling and set sensor to none.
+            PollingInterval = 0;
+            brick.SetInputMode(Port, NxtSensorTypes.None, NxtSensorModes.Raw);
+        }
+
         #endregion
     }
 }

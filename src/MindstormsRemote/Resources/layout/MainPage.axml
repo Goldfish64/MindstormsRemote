@@ -2,12 +2,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
+    <android.support.v7.widget.Toolbar
         android:id="@+id/ToolbarMain"
-        layout="@layout/Toolbar" />
-    <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:background="?android:attr/colorPrimary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="?attr/actionBarSize"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/Connect"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/BtnScan"
+                android:drawableLeft="@drawable/ic_rescan"
+                android:text="@string/Scan"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@id/ToolbarMain"
-        android:id="@+id/LstBluetoothDevices" />
+        android:layout_margin="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:text="@string/AvailableBricks"
+                style="@style/TextAppearance.AppCompat.Body2" />
+            <ProgressBar
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:indeterminateBehavior="repeat"
+                android:id="@+id/PrgSearching"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_gravity="right" />
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/LstBluetoothDevices"
+            android:layout_gravity="fill"
+            android:layout_weight="1"
+            android:choiceMode="singleChoice" />
+    </LinearLayout>
 </RelativeLayout>

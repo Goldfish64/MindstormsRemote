@@ -2,142 +2,156 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
-        android:id="@+id/ToolbarController"
-        layout="@layout/Toolbar" />
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/ControllerProgressBar"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:indeterminateOnly="true"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
+        android:layout_centerInParent="true" />
+    <RelativeLayout
+        android:id="@+id/RootControllerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_below="@id/ToolbarController">
-        <GridLayout
+        android:visibility="gone">
+        <include
+            android:id="@+id/ToolbarController"
+            layout="@layout/Toolbar" />
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:rowCount="2"
-            android:columnCount="2">
-            <TextView
-                android:layout_height="36dp"
-                android:layout_width="0dp"
-                android:layout_gravity="fill_horizontal"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:id="@+id/TxtSensor1" />
-            <TextView
-                android:layout_height="36dp"
-                android:layout_width="0dp"
-                android:layout_gravity="fill_horizontal"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:id="@+id/TxtSensor2" />
-            <TextView
-                android:layout_height="36dp"
-                android:layout_width="0dp"
-                android:layout_gravity="fill_horizontal"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:id="@+id/TxtSensor3" />
-            <TextView
-                android:layout_height="36dp"
-                android:layout_width="0dp"
-                android:layout_gravity="fill_horizontal"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:id="@+id/TxtSensor4" />
-        </GridLayout>
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:rowCount="3"
-            android:columnCount="3">
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile1"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveNW" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile2"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveN" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile3"
-                android:layout_rowWeight="1"
-                android:layout_height="0dp"
-                android:id="@+id/BtnDriveNE" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile1"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveW" />
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_rowWeight="1"
-                android:id="@+id/button1"
-                android:minWidth="25px"
-                android:minHeight="25px">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_below="@id/ToolbarController">
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="2">
                 <TextView
-                    android:text="Battery"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/TxtBattery"
-                    android:gravity="center" />
-            </FrameLayout>
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile3"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveE" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile1"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveSW" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile2"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveS" />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:text="Tile3"
-                android:layout_rowWeight="1"
-                android:id="@+id/BtnDriveSE" />
-        </GridLayout>
-    </LinearLayout>
+                    android:layout_height="36dp"
+                    android:layout_width="0dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/TxtSensor1" />
+                <TextView
+                    android:layout_height="36dp"
+                    android:layout_width="0dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/TxtSensor2" />
+                <TextView
+                    android:layout_height="36dp"
+                    android:layout_width="0dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/TxtSensor3" />
+                <TextView
+                    android:layout_height="36dp"
+                    android:layout_width="0dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/TxtSensor4" />
+            </GridLayout>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:rowCount="3"
+                android:columnCount="3">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveNW" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile2"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveN" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile3"
+                    android:layout_rowWeight="1"
+                    android:layout_height="0dp"
+                    android:id="@+id/BtnDriveNE" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveW" />
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/button1"
+                    android:minWidth="25px"
+                    android:minHeight="25px">
+                    <TextView
+                        android:text="Battery"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/TxtBattery"
+                        android:gravity="center" />
+                </FrameLayout>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile3"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveE" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile1"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveSW" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile2"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveS" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:gravity="center"
+                    android:text="Tile3"
+                    android:layout_rowWeight="1"
+                    android:id="@+id/BtnDriveSE" />
+            </GridLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

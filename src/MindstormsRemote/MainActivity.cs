@@ -29,6 +29,7 @@ using Android.Bluetooth;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using MindstormsRemote.Framework;
@@ -57,13 +58,11 @@ namespace MindstormsRemote
             // Load the layout into view.
             SetContentView(Resource.Layout.MainPage);
 
-            // Add toolbar to view.
-            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.ToolbarMain);
-            SetSupportActionBar(toolbar);
+            // Wire up button events.
+            FindViewById<Button>(Resource.Id.BtnScan).Click += OnScanClick;
 
             // Get ListView.
             listView = FindViewById<ListView>(Resource.Id.LstBluetoothDevices);
-            listView.Adapter = new BluetoothDevicesAdapter(this);
             listView.ItemClick += OnItemClick;
 
             // Check if Bluetooth is supported
@@ -80,16 +79,25 @@ namespace MindstormsRemote
                 var btReceiver = new EventReceiver();
                 btReceiver.BroadcastReceived += OnBtBroadcastReceived;
                 RegisterReceiver(btReceiver, new IntentFilter(BluetoothDevice.ActionFound));
-
-                // Scan for NXT bricks.
-                BluetoothAdapter.DefaultAdapter.StartDiscovery();
             }
+        }
+
+        private void OnScanClick(object sender, EventArgs e)
+        {
+            // Make progress indicator visible.
+            FindViewById<ProgressBar>(Resource.Id.PrgSearching).Visibility = ViewStates.Visible;
+
+            // Delete list and restart scan.
+            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+            listView.Adapter = new BluetoothDevicesAdapter(this);
+            BluetoothAdapter.DefaultAdapter.StartDiscovery();
         }
 
         private void OnItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             // Stop discovery.
             BluetoothAdapter.DefaultAdapter.CancelDiscovery();
+            FindViewById<ProgressBar>(Resource.Id.PrgSearching).Visibility = ViewStates.Gone;
 
             // Get device.
             var device = listView.GetItemAtPosition(e.Position) as BluetoothDevice;
@@ -97,26 +105,9 @@ namespace MindstormsRemote
             // Change to controller activity and pass the MAC address of the chosen NXT to it.
             var controllerActivity = new Intent(this, typeof(ControllerActivity));
             controllerActivity.PutExtra(Constants.BluetoothAddressExtra, device.Address);
+
             StartActivity(controllerActivity);
-        }
-
-        private void OnItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            // Stop discovery.
-            BluetoothAdapter.DefaultAdapter.CancelDiscovery();
-
-            // Re-create list.
-            listView.Adapter = new BluetoothDevicesAdapter(this);
-
-            // Scan for NXT bricks.
-            BluetoothAdapter.DefaultAdapter.StartDiscovery();
+            listView.Adapter = null;
         }
 
         protected override void OnDestroy()
@@ -125,30 +116,6 @@ namespace MindstormsRemote
             BluetoothAdapter.DefaultAdapter.CancelDiscovery();
 
             base.OnDestroy();
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            //change main_compat_menu
-            MenuInflater.Inflate(Resource.Menu.ConnectMenu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            if (item.ItemId == Resource.Id.refresh)
-            {
-                // Stop discovery.
-                BluetoothAdapter.DefaultAdapter.CancelDiscovery();
-
-                // Re-create list.
-                listView.Adapter = new BluetoothDevicesAdapter(this);
-
-                // Scan for NXT bricks.
-                BluetoothAdapter.DefaultAdapter.StartDiscovery();
-                return true;
-            }
-            return base.OnOptionsItemSelected(item);
         }
 
         private void OnBtBroadcastReceived(object sender, BroadcastReceivedEventArgs e)
@@ -160,8 +127,8 @@ namespace MindstormsRemote
                 var device = e.Intent.GetParcelableExtra(BluetoothDevice.ExtraDevice) as BluetoothDevice;
                 if (device.BluetoothClass.MajorDeviceClass == MajorDeviceClass.Toy && device.BluetoothClass.DeviceClass == DeviceClass.ToyRobot)
                 {
+                    // Add to list.
                     var adapter = listView.Adapter as BluetoothDevicesAdapter;
-
                     adapter.Add(device);
                 }
             }

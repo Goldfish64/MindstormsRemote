@@ -313,6 +313,18 @@ namespace Blueberry.Nxt
         }
 
         /// <summary>
+        /// Disconnects the sensor. Used when the brick is being disconnected.
+        /// </summary>
+        internal override void Disconnect()
+        {
+            // Turn off sensor.
+            CommandOff();
+
+            // Call base method.
+            base.Disconnect();
+        }
+
+        /// <summary>
         /// Polls the sensor.
         /// </summary>
         public override void Poll()
