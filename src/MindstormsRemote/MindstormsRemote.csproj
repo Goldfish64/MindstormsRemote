@@ -95,9 +95,6 @@
     <AndroidResource Include="Resources\layout\MainPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\TextViewItem.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\layout\ControllerPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>

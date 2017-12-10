@@ -78,7 +78,7 @@ namespace MindstormsRemote.Framework
         {
             // Get item and view.
             var device = devices[position];
-            var view = (convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.TextViewItem, parent, false)) as TextView;
+            var view = (convertView ?? activity.LayoutInflater.Inflate(Android.Resource.Layout.SimpleListItem1, parent, false)) as TextView;
             //var text = view.FindViewById<TextView>(Resource.Id.textItem);
             view.Text = device.Name;
 

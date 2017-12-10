@@ -24,11 +24,11 @@
             android:orientation="vertical"
             android:padding="@dimen/AppMargin"
             android:layout_below="@id/ToolbarController">
-          <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/SensorValues"
-    style="@style/TextAppearance.AppCompat.Body2" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/SensorValues"
+                style="@style/TextAppearance.AppCompat.Body2" />
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,21 +63,23 @@
                     android:layout_rowWeight="1"
                     android:id="@+id/TxtSensor4" />
             </GridLayout>
-          <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/MotorControl"
-    android:paddingTop="@dimen/VerticalPadding"
-    style="@style/TextAppearance.AppCompat.Body2" />
-          <TextView android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/TxtMotors" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/MotorControl"
+                android:paddingTop="@dimen/VerticalPadding"
+                style="@style/TextAppearance.AppCompat.Body2" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TxtMotors" />
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:rowCount="3"
                 android:columnCount="3"
-              android:paddingLeft="-4dp"
-              android:paddingRight="-4dp">
+                android:paddingLeft="-4dp"
+                android:paddingRight="-4dp">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="0dp"

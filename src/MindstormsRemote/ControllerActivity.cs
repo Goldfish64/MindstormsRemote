@@ -94,10 +94,10 @@ namespace MindstormsRemote
             txtMotors = FindViewById<TextView>(Resource.Id.TxtMotors);
 
             // Clear text fields.
-            txtSensor1.Text = "Port 1: None";
-            txtSensor2.Text = "Port 2: None";
-            txtSensor3.Text = "Port 3: None";
-            txtSensor4.Text = "Port 4: None";
+            txtSensor1.Text = "1: None";
+            txtSensor2.Text = "2: None";
+            txtSensor3.Text = "3: None";
+            txtSensor4.Text = "4: None";
 
             await Task.Run(() =>
             {
@@ -269,13 +269,13 @@ namespace MindstormsRemote
 
             // Clear text fields.
             if (brick.Sensor1 == null)
-                txtSensor1.Text = "Port 1: None";
+                txtSensor1.Text = "1: None";
             if (brick.Sensor2 == null)
-                txtSensor2.Text = "Port 2: None";
+                txtSensor2.Text = "2: None";
             if (brick.Sensor3 == null)
-                txtSensor3.Text = "Port 3: None";
+                txtSensor3.Text = "3: None";
             if (brick.Sensor4 == null)
-                txtSensor4.Text = "Port 4: None";
+                txtSensor4.Text = "4: None";
 
             // Clear motors.
             brick.MotorA = null;
@@ -531,7 +531,7 @@ namespace MindstormsRemote
         private void OnSensor1Polled(NxtDevice sender)
         {
             // Update TextView.
-            RunOnUiThread(() => txtSensor1.Text = string.Format("Port 1: {0}\n{1}", sender.FriendlyName, sender.Value));
+            RunOnUiThread(() => txtSensor1.Text = string.Format("1: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace MindstormsRemote
         private void OnSensor2Polled(NxtDevice sender)
         {
             // Update TextView.
-            RunOnUiThread(() => txtSensor2.Text = string.Format("Port 2: {0}\n{1}", sender.FriendlyName, sender.Value));
+            RunOnUiThread(() => txtSensor2.Text = string.Format("2: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace MindstormsRemote
         private void OnSensor3Polled(NxtDevice sender)
         {
             // Update TextView.
-            RunOnUiThread(() => txtSensor3.Text = string.Format("Port 3: {0}\n{1}", sender.FriendlyName, sender.Value));
+            RunOnUiThread(() => txtSensor3.Text = string.Format("3: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace MindstormsRemote
         private void OnSensor4Polled(NxtDevice sender)
         {
             // Update TextView.
-            RunOnUiThread(() => txtSensor4.Text = string.Format("Port 4: {0}\n{1}", sender.FriendlyName, sender.Value));
+            RunOnUiThread(() => txtSensor4.Text = string.Format("4: {0}\n{1}", sender.FriendlyName, sender.Value));
         }
 
         #endregion

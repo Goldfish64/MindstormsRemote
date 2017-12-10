@@ -128,7 +128,7 @@ namespace MindstormsRemote.Framework
 
             // Get item and view.
             var value = sensors.GetValue(position);
-            var view = (convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.TextViewItem, parent, false)) as TextView;
+            var view = (convertView ?? activity.LayoutInflater.Inflate(Android.Resource.Layout.SimpleSpinnerDropDownItem, parent, false)) as TextView;
 
             // Get name.
             if (Enum.IsDefined(typeof(Sensors), value))
