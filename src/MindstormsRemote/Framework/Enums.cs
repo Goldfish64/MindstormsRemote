@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* File: Sensors.cs
+* File: Enums.cs
 * 
 * Copyright (c) 2016-2017 John Davis
 *

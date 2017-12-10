@@ -30,6 +30,9 @@ using System.Collections.Generic;
 
 namespace MindstormsRemote.Framework
 {
+    /// <summary>
+    /// Represents an <see cref="Adapter"/> for <see cref="BluetoothDevice"/> items.
+    /// </summary>
     public class BluetoothDevicesAdapter : BaseAdapter
     {
         #region Private variables
