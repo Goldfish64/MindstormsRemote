@@ -1858,8 +1858,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070085
 			public const int BtnScan = 2131165317;
 			
-			// aapt resource value: 0x7f0700a0
-			public const int ChkBrakeDriveMotors = 2131165344;
+			// aapt resource value: 0x7f0700a2
+			public const int ChkBrakeDriveMotors = 2131165346;
 			
 			// aapt resource value: 0x7f070069
 			public const int ControllerProgressBar = 2131165289;
@@ -1891,6 +1891,9 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f07006a
 			public const int RootControllerLayout = 2131165290;
 			
+			// aapt resource value: 0x7f0700a1
+			public const int SeekMotorDrivePower = 2131165345;
+			
 			// aapt resource value: 0x7f070096
 			public const int SpinSensor1 = 2131165334;
 			
@@ -1903,8 +1906,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070099
 			public const int SpinSensor4 = 2131165337;
 			
-			// aapt resource value: 0x7f0700a2
-			public const int Toolbar = 2131165346;
+			// aapt resource value: 0x7f0700a3
+			public const int Toolbar = 2131165347;
 			
 			// aapt resource value: 0x7f07006b
 			public const int ToolbarController = 2131165291;
@@ -1917,6 +1920,9 @@ namespace MindstormsRemote
 			
 			// aapt resource value: 0x7f070076
 			public const int TxtBattery = 2131165302;
+			
+			// aapt resource value: 0x7f0700a0
+			public const int TxtMotorDrivePower = 2131165344;
 			
 			// aapt resource value: 0x7f070070
 			public const int TxtMotors = 2131165296;
@@ -2227,8 +2233,8 @@ namespace MindstormsRemote
 			// aapt resource value: 0x7f070068
 			public const int select_dialog_listview = 2131165288;
 			
-			// aapt resource value: 0x7f0700a3
-			public const int settings = 2131165347;
+			// aapt resource value: 0x7f0700a4
+			public const int settings = 2131165348;
 			
 			// aapt resource value: 0x7f070053
 			public const int shortcut = 2131165267;
@@ -2283,9 +2289,6 @@ namespace MindstormsRemote
 			
 			// aapt resource value: 0x7f070090
 			public const int text2 = 2131165328;
-			
-			// aapt resource value: 0x7f0700a1
-			public const int textItem = 2131165345;
 			
 			// aapt resource value: 0x7f07004d
 			public const int textSpacerNoButtons = 2131165261;
@@ -2527,10 +2530,7 @@ namespace MindstormsRemote
 			public const int support_simple_spinner_dropdown_item = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int TextViewItem = 2130968628;
-			
-			// aapt resource value: 0x7f040035
-			public const int Toolbar = 2130968629;
+			public const int Toolbar = 2130968628;
 			
 			static Layout()
 			{

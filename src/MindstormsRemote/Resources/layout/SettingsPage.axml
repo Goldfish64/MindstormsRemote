@@ -5,122 +5,128 @@
     <include
         android:id="@+id/ToolbarSettings"
         layout="@layout/Toolbar" />
-  <ScrollView         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:layout_below="@id/ToolbarSettings">
-    
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/AppMargin"
-        >
-      <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/SensorValues"
-    style="@style/TextAppearance.AppCompat.Body2" />
-        <TextView
-            android:text="@string/Sensor1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Spinner
+        android:layout_height="match_parent"
+        android:layout_below="@id/ToolbarSettings">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/SpinSensor1"
-            android:spinnerMode="dialog"
-            android:prompt="@string/Sensor1" />
-        <TextView
-            android:text="@string/Sensor2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/SpinSensor2"
-            android:spinnerMode="dialog"
-            android:prompt="@string/Sensor2" />
-        <TextView
-            android:text="@string/Sensor3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/SpinSensor3"
-            android:spinnerMode="dialog"
-            android:prompt="@string/Sensor3" />
-        <TextView
-            android:text="@string/Sensor4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/SpinSensor4"
-            android:spinnerMode="dialog"
-            android:prompt="@string/Sensor4" />
-
-      <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/MotorControl"
-    android:paddingTop="@dimen/VerticalPadding"
-    style="@style/TextAppearance.AppCompat.Body2" />
-        <TextView
-            android:text="@string/MotorL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/RbnMotorLPortA"
+            android:padding="@dimen/AppMargin">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/SensorValues"
+                style="@style/TextAppearance.AppCompat.Body2" />
+            <TextView
+                android:text="@string/Sensor1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SpinSensor1"
+                android:spinnerMode="dialog"
+                android:prompt="@string/Sensor1" />
+            <TextView
+                android:text="@string/Sensor2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SpinSensor2"
+                android:spinnerMode="dialog"
+                android:prompt="@string/Sensor2" />
+            <TextView
+                android:text="@string/Sensor3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SpinSensor3"
+                android:spinnerMode="dialog"
+                android:prompt="@string/Sensor3" />
+            <TextView
+                android:text="@string/Sensor4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SpinSensor4"
+                android:spinnerMode="dialog"
+                android:prompt="@string/Sensor4" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/MotorControl"
+                android:paddingTop="@dimen/VerticalPadding"
+                style="@style/TextAppearance.AppCompat.Body2" />
+            <TextView
+                android:text="@string/MotorL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RbnMotorLPortA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortA" />
+                <RadioButton
+                    android:id="@+id/RbnMotorLPortB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortB" />
+                <RadioButton
+                    android:id="@+id/RbnMotorLPortC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortC" />
+            </RadioGroup>
+            <TextView
+                android:text="@string/MotorR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RbnMotorRPortA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortA" />
+                <RadioButton
+                    android:id="@+id/RbnMotorRPortB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortB" />
+                <RadioButton
+                    android:id="@+id/RbnMotorRPortC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PortC" />
+            </RadioGroup>
+          <TextView
+    android:id="@+id/TxtMotorDrivePower"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SeekMotorDrivePower"
+                android:max="100" />
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PortA" />
-            <RadioButton
-                android:id="@+id/RbnMotorLPortB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PortB" />
-            <RadioButton
-                android:id="@+id/RbnMotorLPortC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PortC" />
-        </RadioGroup>
-        <TextView
-            android:text="@string/MotorR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/RbnMotorRPortA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PortA" />
-            <RadioButton
-                android:id="@+id/RbnMotorRPortB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PortB" />
-            <RadioButton
-                android:id="@+id/RbnMotorRPortC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PortC" />
-        </RadioGroup>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ChkBrakeDriveMotors"
-            android:text="@string/BrakeDriveMotors" />
-    </LinearLayout>
-  </ScrollView>
+                android:id="@+id/ChkBrakeDriveMotors"
+                android:text="@string/BrakeDriveMotors" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

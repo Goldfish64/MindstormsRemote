@@ -48,6 +48,8 @@ namespace MindstormsRemote
         private RadioButton rbnMotorRPortA;
         private RadioButton rbnMotorRPortB;
         private RadioButton rbnMotorRPortC;
+        private SeekBar seekDriveMotorPower;
+        private TextView txtDriveMotorPower;
 
         #endregion
 
@@ -157,6 +159,22 @@ namespace MindstormsRemote
             prefEditor.PutInt(Constants.PrefMotorRPort, motorRightPort);
             prefEditor.Commit();
 
+            // Get drive motor power setting.
+            var driveMotorPower = preferences.GetInt(Constants.PrefMotorDrivePower, 75);
+            if (driveMotorPower > 100)
+                driveMotorPower = 100;
+            else if (driveMotorPower < 0)
+                driveMotorPower = 0;
+            prefEditor.PutInt(Constants.PrefMotorDrivePower, driveMotorPower);
+            prefEditor.Commit();
+
+            // Get seekbar for drive motor power.
+            seekDriveMotorPower = FindViewById<SeekBar>(Resource.Id.SeekMotorDrivePower);
+            seekDriveMotorPower.Progress = driveMotorPower;
+            seekDriveMotorPower.ProgressChanged += OnDriveMotorPowerProgressChanged;
+            txtDriveMotorPower = FindViewById<TextView>(Resource.Id.TxtMotorDrivePower);
+            txtDriveMotorPower.Text = string.Format(Constants.MotorDrivePowerFormat, driveMotorPower);
+
             // Get drive motor brake setting.
             var chkBrakeDriveMotors = FindViewById<CheckBox>(Resource.Id.ChkBrakeDriveMotors);
             chkBrakeDriveMotors.Checked = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);
@@ -238,6 +256,17 @@ namespace MindstormsRemote
                 prefEditor.PutInt(Constants.PrefMotorRPort, Constants.PrefValueMotorPortC);
 
             // Commit changes.
+            prefEditor.Commit();
+        }
+
+        /// <summary>
+        /// Handles the ProgressChanged event of the drive motor power seekbar.
+        /// </summary>
+        private void OnDriveMotorPowerProgressChanged(object sender, SeekBar.ProgressChangedEventArgs e)
+        {
+            // Save power level.
+            txtDriveMotorPower.Text = string.Format(Constants.MotorDrivePowerFormat, seekDriveMotorPower.Progress);
+            prefEditor.PutInt(Constants.PrefMotorDrivePower, seekDriveMotorPower.Progress);
             prefEditor.Commit();
         }
 

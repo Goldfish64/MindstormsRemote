@@ -197,6 +197,14 @@ namespace MindstormsRemote
                         break;
                 }
 
+                // Get drive motors power level setting.
+                var driveMotorPower = preferences.GetInt(Constants.PrefMotorDrivePower, 75);
+                if (driveMotorPower > 100)
+                    driveMotorPower = 100;
+                else if (driveMotorPower < 0)
+                    driveMotorPower = 0;
+                powerLevel = (byte)driveMotorPower;
+
                 // Get drive motors brake setting.
                 brakeDriveMotors = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);
                 if (brakeDriveMotors)
@@ -320,6 +328,14 @@ namespace MindstormsRemote
                     brick.MotorC = motorR;
                     break;
             }
+
+            // Get drive motors power level setting.
+            var driveMotorPower = preferences.GetInt(Constants.PrefMotorDrivePower, 75);
+            if (driveMotorPower > 100)
+                driveMotorPower = 100;
+            else if (driveMotorPower < 0)
+                driveMotorPower = 0;
+            powerLevel = (byte)driveMotorPower;
 
             // Get drive motors brake setting.
             brakeDriveMotors = preferences.GetBoolean(Constants.PrefMotorBrakeDrive, false);

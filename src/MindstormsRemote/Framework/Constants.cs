@@ -24,6 +24,9 @@
 
 namespace MindstormsRemote.Framework
 {
+    /// <summary>
+    /// Contains constants for the app.
+    /// </summary>
     public static class Constants
     {
         public const string BluetoothAddressExtra = "BluetoothAddress";
@@ -35,10 +38,13 @@ namespace MindstormsRemote.Framework
 
         public const string PrefMotorLPort = "MotorLPort";
         public const string PrefMotorRPort = "MotorRPort";
+        public const string PrefMotorDrivePower = "MotorDrivePower";
         public const string PrefMotorBrakeDrive = "MotorBrakeDrive";
 
         public const int PrefValueMotorPortA = 0;
         public const int PrefValueMotorPortB = 1;
         public const int PrefValueMotorPortC = 2;
+
+        public const string MotorDrivePowerFormat = "Drive motor power: {0}%";
     }
 }
