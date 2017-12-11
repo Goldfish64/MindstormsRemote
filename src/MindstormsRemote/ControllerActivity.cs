@@ -362,6 +362,18 @@ namespace MindstormsRemote
                 case Sensors.Touch:
                     return new NxtTouchSensor();
 
+                case Sensors.SoundDB:
+                    return new NxtSoundSensor(false);
+
+                case Sensors.SoundDBA:
+                    return new NxtSoundSensor(true);
+
+                case Sensors.LightActive:
+                    return new NxtLightSensor(true);
+
+                case Sensors.LightInactive:
+                    return new NxtLightSensor();
+
                 case Sensors.ColorFull:
                     return new NxtColorSensor() { DetectionMode = NxtColorSensorModes.Color };
 
